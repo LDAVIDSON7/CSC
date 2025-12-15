@@ -1,0 +1,103 @@
+{% set currentPage ="navigation" %}
+
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Question page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+
+{% block head %}
+{{ super() }}
+  <style>
+     .custom-nav {
+    display: flex;
+    gap: 2rem;
+    padding: 1rem 0 0 0;
+    border-bottom: 1px solid #b1b4b6;
+}
+
+.custom-nav__item {
+    padding-bottom: 0; 
+    margin-bottom: -1px; /* pulls underline down so it touches the grey line */
+}
+
+.custom-nav__item a {
+    text-decoration: none;
+    color: #0b0c0c;
+    font-size: 1.1rem;
+}
+
+.custom-nav__item--active {
+    border-bottom: 4px solid #0b0c0c;
+}
+
+.custom-nav__item--active a {
+    font-weight: bold;
+}
+
+  </style>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+    <div class="custom-nav">
+
+        <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
+            <a href="/navigation">Navigation</a>
+        </div>
+
+        <div class="custom-nav__item {% if currentPage == 'group-structure' %}custom-nav__item--active{% endif %}">
+            <a href="/upload-group">Group Structure</a>
+        </div>
+
+        <div class="custom-nav__item {% if currentPage == 'financial-model' %}custom-nav__item--active{% endif %}">
+            <a href="/upload-financial">Financial Model</a>
+        </div>
+
+        <div class="custom-nav__item {% if currentPage == 'additional-documents' %}custom-nav__item--active{% endif %}">
+            <a href="/upload-additional">Additional Documents</a>
+        </div>
+
+        <div class="custom-nav__item {% if currentPage == 'confirm-submit' %}custom-nav__item--active{% endif %}">
+            <a href="/confirmation">Confirm and submit</a>
+        </div>
+
+    </div>
+</div>
+
+
+<br>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-l">
+        Heading or question goes here
+      </h1>
+
+      <form class="form" action="/path/of/next/page" method="post">
+
+        <p>
+          [Insert question content here - see the
+          <a href="https://design-system.service.gov.uk">GOV.UK Design System</a>
+          for examples]
+        </p>
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}

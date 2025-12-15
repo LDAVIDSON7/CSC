@@ -1,5 +1,5 @@
 {
-  "serviceName": "Service name goes here",
+  "serviceName": "Children's Social Care Financial Oversight Scheme",
   "plugins": {
     "govuk-frontend": {
       "rebrand": true
