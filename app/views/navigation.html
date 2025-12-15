@@ -68,25 +68,28 @@
   </div>
 
   <br>
+    <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
   <form method="post" action="/navigation">
     <fieldset class="govuk-fieldset">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-        <h1 class="govuk-fieldset__heading">Required Documents</h1>
+        <h1 class="govuk-fieldset__heading">Select the documents you need to upload</h1>
       </legend>
-      <div id="waste-hint" class="govuk-hint">Select the documents you need to upload.</div>
-
+      <div id="waste-hint" class="govuk-hint">Check your latest email from the Financial Oversight Scheme to confirm which documents you need to upload.</div>
+      <div id="waste-hint" class="govuk-hint">Select all that apply.</div>
       <div class="govuk-checkboxes">
         <div class="govuk-checkboxes__item">
           <input class="govuk-checkboxes__input" id="structure" name="documents" type="checkbox" value="upload-group">
-          <label class="govuk-label govuk-checkboxes__label" for="structure">Group structure</label>
+          <label class="govuk-label govuk-checkboxes__label" for="structure">Company group structure</label>
         </div>
         <div class="govuk-checkboxes__item">
           <input class="govuk-checkboxes__input" id="model" name="documents" type="checkbox" value="upload-financial">
-          <label class="govuk-label govuk-checkboxes__label" for="model">Financial statement</label>
+          <label class="govuk-label govuk-checkboxes__label" for="model">Quarterly financial data</label>
         </div>
         <div class="govuk-checkboxes__item">
           <input class="govuk-checkboxes__input" id="additional" name="documents" type="checkbox" value="upload-additional">
-          <label class="govuk-label govuk-checkboxes__label" for="additional">Additional documents</label>
+          <label class="govuk-label govuk-checkboxes__label" for="additional">Other documents</label>
         </div>
       </div>
     </fieldset>
