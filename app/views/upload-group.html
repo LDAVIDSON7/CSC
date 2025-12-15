@@ -77,20 +77,34 @@
 
     <!-- Always show last tab -->
     <div class="custom-nav__item {% if currentPage == 'confirm-submit' %}custom-nav__item--active{% endif %}">
-      <a href="/confirmation">Confirm and submit</a>
+      <a href="/declaration">Confirm and submit</a>
     </div>
 
   </div>
 
  <br> 
 
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
   <h1 class="govuk-heading-l">Upload Group Structure</h1>
   <p class="govuk-body">Please upload the documents for the group structure here.</p>
 
-  <form method="post" action="/upload-group">
-    {{ govukButton({ text: "Continue" }) }}
-  </form>
 
+  <div class="govuk-form-group">
+  <label class="govuk-label" for="file-upload-1">
+    Upload a file
+  </label>
+  <div
+    class="govuk-drop-zone"
+    data-module="govuk-file-upload">
+    <input class="govuk-file-upload" id="file-upload-1" name="fileUpload1" type="file">
+  </div>
+</div>
+
+<form method="post" action="/upload-group" novalidate data-novalidate="true">
+  <input type="hidden" name="pageSubmitted" value="true">
+  {{ govukButton({ text: "Continue" }) }}
+</form>
 </div>
 
 

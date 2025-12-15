@@ -1,132 +1,97 @@
-{% set currentPage ="navigation" %}
-
+{% set currentPage = "navigation" %}
 {% extends "layouts/main.html" %}
 
-{% block pageTitle %}
-  Question page template – {{ serviceName }} – GOV.UK Prototype Kit
-{% endblock %}
+{% block pageTitle %}Required Documents – {{ serviceName }}{% endblock %}
 
 {% block beforeContent %}
-  {{ govukBackLink({
-  text: "Back",
-  href: "javascript:window.history.back()"
-}) }}
+  {{ govukBackLink({ text: "Back", href: "javascript:window.history.back()" }) }}
 {% endblock %}
-
 
 {% block head %}
 {{ super() }}
-  <style>
-     .custom-nav {
+<style>
+  .custom-nav {
     display: flex;
     gap: 2rem;
     padding: 1rem 0 0 0;
     border-bottom: 1px solid #b1b4b6;
-}
-
-.custom-nav__item {
+  }
+  .custom-nav__item {
     padding-bottom: 0; 
-    margin-bottom: -1px; /* pulls underline down so it touches the grey line */
-}
-
-.custom-nav__item a {
+    margin-bottom: -1px; 
+  }
+  .custom-nav__item a {
     text-decoration: none;
     color: #0b0c0c;
     font-size: 1.1rem;
-}
-
-.custom-nav__item--active {
+  }
+  .custom-nav__item--active {
     border-bottom: 4px solid #0b0c0c;
-}
-
-.custom-nav__item--active a {
+  }
+  .custom-nav__item--active a {
     font-weight: bold;
-}
-
-  </style>
+  }
+</style>
 {% endblock %}
 
 {% block content %}
-
 <div class="govuk-width-container">
-    <div class="custom-nav">
-
-        <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
-            <a href="/navigation">Navigation</a>
-        </div>
-
-    
-
-        <div class="custom-nav__item {% if currentPage == 'confirm-submit' %}custom-nav__item--active{% endif %}">
-            <a href="/confirmation">Confirm and submit</a>
-        </div>
-
+  <div class="custom-nav">
+    <!-- Always show first tab -->
+    <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
+      <a href="/navigation">Navigation</a>
     </div>
+
+    <!-- Dynamic middle tabs -->
+    {% if journey.includes('upload-group') %}
+      <div class="custom-nav__item {% if currentPage == 'upload-group' %}custom-nav__item--active{% endif %}">
+        <a href="/upload-group">Group Structure</a>
+      </div>
+    {% endif %}
+
+    {% if journey.includes('upload-financial') %}
+      <div class="custom-nav__item {% if currentPage == 'upload-financial' %}custom-nav__item--active{% endif %}">
+        <a href="/upload-financial">Financial Model</a>
+      </div>
+    {% endif %}
+
+    {% if journey.includes('upload-additional') %}
+      <div class="custom-nav__item {% if currentPage == 'upload-additional' %}custom-nav__item--active{% endif %}">
+        <a href="/upload-additional">Additional Documents</a>
+      </div>
+    {% endif %}
+
+    <!-- Always show last tab -->
+    <div class="custom-nav__item {% if currentPage == 'confirm-submit' %}custom-nav__item--active{% endif %}">
+      <a href="/confirmation">Confirm and submit</a>
+    </div>
+  </div>
+
+  <br>
+  <form method="post" action="/navigation">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+        <h1 class="govuk-fieldset__heading">Required Documents</h1>
+      </legend>
+      <div id="waste-hint" class="govuk-hint">Select the documents you need to upload.</div>
+
+      <div class="govuk-checkboxes">
+        <div class="govuk-checkboxes__item">
+          <input class="govuk-checkboxes__input" id="structure" name="documents" type="checkbox" value="upload-group">
+          <label class="govuk-label govuk-checkboxes__label" for="structure">Group structure</label>
+        </div>
+        <div class="govuk-checkboxes__item">
+          <input class="govuk-checkboxes__input" id="model" name="documents" type="checkbox" value="upload-financial">
+          <label class="govuk-label govuk-checkboxes__label" for="model">Financial statement</label>
+        </div>
+        <div class="govuk-checkboxes__item">
+          <input class="govuk-checkboxes__input" id="additional" name="documents" type="checkbox" value="upload-additional">
+          <label class="govuk-label govuk-checkboxes__label" for="additional">Additional documents</label>
+        </div>
+      </div>
+    </fieldset>
+    <br>
+    {{ govukButton({ text: "Continue" }) }}
+  </form>
 </div>
-
-
-<br>
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-
-
-<div class="govuk-form-group">
-  <fieldset class="govuk-fieldset">
-    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-      <h1 class="govuk-fieldset__heading">
-        Required Documents
-      </h1>
-    </legend>
-    <div id="waste-hint" class="govuk-hint">
-      Refer back to your email and select from the following options.
-    </div>
-    <form method="post" action="/navigation">
-  <div class="govuk-checkboxes">
-
-    <div class="govuk-checkboxes__item">
-      <input class="govuk-checkboxes__input"
-             id="structure"
-             name="documents"
-             type="checkbox"
-             value="upload-group">
-      <label class="govuk-label govuk-checkboxes__label" for="structure">
-        Group structure
-      </label>
-    </div>
-
-    <div class="govuk-checkboxes__item">
-      <input class="govuk-checkboxes__input"
-             id="model"
-             name="documents"
-             type="checkbox"
-             value="upload-financial">
-      <label class="govuk-label govuk-checkboxes__label" for="model">
-        Financial statement
-      </label>
-    </div>
-
-    <div class="govuk-checkboxes__item">
-      <input class="govuk-checkboxes__input"
-             id="additional"
-             name="documents"
-             type="checkbox"
-             value="upload-additional">
-      <label class="govuk-label govuk-checkboxes__label" for="additional">
-        Additional documents
-      </label>
-    </div>
-
-  </div>
-<br> 
-
-  {{ govukButton({
-          text: "Continue"
-        }) }}
-
-</form>
-
-    
-    </div>
-  </div>
-
 {% endblock %}

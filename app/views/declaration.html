@@ -1,8 +1,8 @@
-{% set currentPage ="confirm-submit" %}
+{% set currentPage ="declaration" %}
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
-  Content page template – {{ serviceName }} – GOV.UK Prototype Kit
+  Confirm and submit – {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
 {% block beforeContent %}
@@ -14,82 +14,99 @@
 
 {% block head %}
 {{ super() }}
-  <style>
-     .custom-nav {
-    display: flex;
-    gap: 2rem;
-    padding: 1rem 0 0 0;
-    border-bottom: 1px solid #b1b4b6;
+<style>
+.custom-nav {
+  display: flex;
+  gap: 2rem;
+  padding: 1rem 0 0 0;
+  border-bottom: 1px solid #b1b4b6;
 }
 
 .custom-nav__item {
-    padding-bottom: 0; 
-    margin-bottom: -1px; /* pulls underline down so it touches the grey line */
+  padding-bottom: 0; 
+  margin-bottom: -1px; 
 }
 
 .custom-nav__item a {
-    text-decoration: none;
-    color: #0b0c0c;
-    font-size: 1.1rem;
+  text-decoration: none;
+  color: #0b0c0c;
+  font-size: 1.1rem;
 }
 
 .custom-nav__item--active {
-    border-bottom: 4px solid #0b0c0c;
+  border-bottom: 4px solid #0b0c0c;
 }
 
 .custom-nav__item--active a {
-    font-weight: bold;
+  font-weight: bold;
 }
-
-  </style>
+</style>
 {% endblock %}
 
 {% block content %}
-
 <div class="govuk-width-container">
-    <div class="custom-nav">
-
-          <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
-            <a href="/navigation">Navigation</a>
-        </div>
-
-        <div class="custom-nav__item {% if currentPage == 'group-structure' %}custom-nav__item--active{% endif %}">
-            <a href="/upload-group">Group Structure</a>
-        </div>
-
-        <div class="custom-nav__item {% if currentPage == 'financial-model' %}custom-nav__item--active{% endif %}">
-            <a href="/upload-financial">Financial Model</a>
-        </div>
-
-        <div class="custom-nav__item {% if currentPage == 'additional-documents' %}custom-nav__item--active{% endif %}">
-            <a href="/upload-additional">Additional Documents</a>
-        </div>
-
-        <div class="custom-nav__item {% if currentPage == 'confirm-submit' %}custom-nav__item--active{% endif %}">
-            <a href="/declaration">Confirm and submit</a>
-        </div>
-
+  <!-- Dynamic navigation bar -->
+  <div class="custom-nav">
+    <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
+      <a href="/navigation">Navigation</a>
     </div>
-</div>
 
-<br> 
+    {% if journey.includes('upload-group') %}
+      <div class="custom-nav__item {% if currentPage == 'upload-group' %}custom-nav__item--active{% endif %}">
+        <a href="/upload-group">Group Structure</a>
+      </div>
+    {% endif %}
+
+    {% if journey.includes('upload-financial') %}
+      <div class="custom-nav__item {% if currentPage == 'upload-financial' %}custom-nav__item--active{% endif %}">
+        <a href="/upload-financial">Financial Model</a>
+      </div>
+    {% endif %}
+
+    {% if journey.includes('upload-additional') %}
+      <div class="custom-nav__item {% if currentPage == 'upload-additional' %}custom-nav__item--active{% endif %}">
+        <a href="/upload-additional">Additional Documents</a>
+      </div>
+    {% endif %}
+
+    <div class="custom-nav__item {% if currentPage == 'declaration' %}custom-nav__item--active{% endif %}">
+      <a href="/declaration">Confirm and submit</a>
+    </div>
+  </div>
+
+  <br>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <h1 class="govuk-heading-l">
-        Heading goes here
-      </h1>
+      <h1 class="govuk-heading-l">Confirm and submit</h1>
 
-      <p>
-        This is a paragraph of text. It explains in more detail what has happened and wraps across several lines.
-      </p>
+      <form method="post" action="/confirmation" id="declaration-form">
+        <div class="govuk-checkboxes">
+          <div class="govuk-checkboxes__item">
+            <input class="govuk-checkboxes__input" id="confirm" name="confirm" type="checkbox">
+            <label class="govuk-label govuk-checkboxes__label" for="confirm">
+              I confirm everything I submitted is done to the best of my knowledge
+            </label>
+          </div>
+        </div>
 
-      <p>
-        Read more <a href="/path/of/page">about this topic</a>.
-      </p>
+        <br>
+
+        <button type="submit" class="govuk-button" id="submit-button" disabled> Confirm and Submit</button>
+      </form>
 
     </div>
   </div>
+</div>
 
+<script>
+  // Enable the submit button when checkbox is checked
+  const checkbox = document.getElementById('confirm')
+  const submitButton = document.getElementById('submit-button')
+
+  checkbox.addEventListener('change', function() {
+    submitButton.disabled = !checkbox.checked
+  })
+</script>
 {% endblock %}
