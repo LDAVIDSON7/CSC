@@ -1,4 +1,4 @@
-{% set currentPage ="group-structure" %}
+{% set currentPage = "upload-group" %}  
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
@@ -47,49 +47,52 @@
 {% block content %}
 
 <div class="govuk-width-container">
-    <div class="custom-nav">
 
-          <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
-            <a href="/navigation">Navigation</a>
-        </div>
+  <!-- Dynamic navigation bar -->
+  <div class="custom-nav">
 
-        <div class="custom-nav__item {% if currentPage == 'group-structure' %}custom-nav__item--active{% endif %}">
-            <a href="/upload-group">Group Structure</a>
-        </div>
-
-        <div class="custom-nav__item {% if currentPage == 'financial-model' %}custom-nav__item--active{% endif %}">
-            <a href="/upload-financial">Financial Model</a>
-        </div>
-
-        <div class="custom-nav__item {% if currentPage == 'additional-documents' %}custom-nav__item--active{% endif %}">
-            <a href="/upload-additional">Additional Documents</a>
-        </div>
-
-        <div class="custom-nav__item {% if currentPage == 'confirm-submit' %}custom-nav__item--active{% endif %}">
-            <a href="/declaration">Confirm and submit</a>
-        </div>
-
+    <!-- Always show first tab -->
+    <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
+      <a href="/navigation">Navigation</a>
     </div>
+
+    <!-- Middle tabs: only show if in journey -->
+    {% if journey.includes('upload-group') %}
+      <div class="custom-nav__item {% if currentPage == 'upload-group' %}custom-nav__item--active{% endif %}">
+        <a href="/upload-group">Group Structure</a>
+      </div>
+    {% endif %}
+
+    {% if journey.includes('upload-financial') %}
+      <div class="custom-nav__item {% if currentPage == 'upload-financial' %}custom-nav__item--active{% endif %}">
+        <a href="/upload-financial">Financial Model</a>
+      </div>
+    {% endif %}
+
+    {% if journey.includes('upload-additional') %}
+      <div class="custom-nav__item {% if currentPage == 'upload-additional' %}custom-nav__item--active{% endif %}">
+        <a href="/upload-additional">Additional Documents</a>
+      </div>
+    {% endif %}
+
+    <!-- Always show last tab -->
+    <div class="custom-nav__item {% if currentPage == 'confirm-submit' %}custom-nav__item--active{% endif %}">
+      <a href="/confirmation">Confirm and submit</a>
+    </div>
+
+  </div>
+
+ <br> 
+
+  <h1 class="govuk-heading-l">Upload Group Structure</h1>
+  <p class="govuk-body">Please upload the documents for the group structure here.</p>
+
+  <form method="post" action="/upload-group">
+    {{ govukButton({ text: "Continue" }) }}
+  </form>
+
 </div>
 
-<br> 
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-
-      <h1 class="govuk-heading-l">
-        Heading goes here
-      </h1>
-
-      <p>
-        This is a paragraph of text. It explains in more detail what has happened and wraps across several lines.
-      </p>
-
-      <p>
-        Read more <a href="/path/of/page">about this topic</a>.
-      </p>
-
-    </div>
-  </div>
 
 {% endblock %}

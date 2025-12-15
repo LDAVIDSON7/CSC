@@ -47,31 +47,42 @@
 {% block content %}
 
 <div class="govuk-width-container">
-    <div class="custom-nav">
 
-          <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
-            <a href="/navigation">Navigation</a>
-        </div>
 
-        <div class="custom-nav__item {% if currentPage == 'group-structure' %}custom-nav__item--active{% endif %}">
-            <a href="/upload-group">Group Structure</a>
-        </div>
+     
+  <!-- Dynamic navigation bar -->
+  <div class="custom-nav">
 
-        <div class="custom-nav__item {% if currentPage == 'financial-model' %}custom-nav__item--active{% endif %}">
-            <a href="/upload-financial">Financial Model</a>
-        </div>
-
-        <div class="custom-nav__item {% if currentPage == 'additional-documents' %}custom-nav__item--active{% endif %}">
-            <a href="/upload-additional">Additional Documents</a>
-        </div>
-
-        <div class="custom-nav__item {% if currentPage == 'confirm-submit' %}custom-nav__item--active{% endif %}">
-            <a href="/declaration">Confirm and submit</a>
-        </div>
-
+    <!-- Always show first tab -->
+    <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
+      <a href="/navigation">Navigation</a>
     </div>
-</div>
 
+    <!-- Middle tabs: only show if in journey -->
+    {% if journey.includes('upload-group') %}
+      <div class="custom-nav__item {% if currentPage == 'upload-group' %}custom-nav__item--active{% endif %}">
+        <a href="/upload-group">Group Structure</a>
+      </div>
+    {% endif %}
+
+    {% if journey.includes('upload-financial') %}
+      <div class="custom-nav__item {% if currentPage == 'upload-financial' %}custom-nav__item--active{% endif %}">
+        <a href="/upload-financial">Financial Model</a>
+      </div>
+    {% endif %}
+
+    {% if journey.includes('upload-additional') %}
+      <div class="custom-nav__item {% if currentPage == 'upload-additional' %}custom-nav__item--active{% endif %}">
+        <a href="/upload-additional">Additional Documents</a>
+      </div>
+    {% endif %}
+
+    <!-- Always show last tab -->
+    <div class="custom-nav__item {% if currentPage == 'confirm-submit' %}custom-nav__item--active{% endif %}">
+      <a href="/confirmation">Confirm and submit</a>
+    </div>
+
+  </div>
 <br> 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">

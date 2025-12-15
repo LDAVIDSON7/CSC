@@ -14,3 +14,23 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
     })}}
 
 {% endblock %}
+
+<div class="custom-nav">
+
+  {% for page in journey %}
+    <div class="custom-nav__item {% if currentPage == page %}custom-nav__item--active{% endif %}">
+      {% if page == 'upload-group' %}
+        <a href="/upload-group">Group Structure</a>
+      {% elif page == 'upload-financial' %}
+        <a href="/upload-financial">Financial Model</a>
+      {% elif page == 'upload-additional' %}
+        <a href="/upload-additional">Additional Documents</a>
+      {% endif %}
+    </div>
+  {% endfor %}
+
+  <div class="custom-nav__item {% if currentPage == 'confirm-submit' %}custom-nav__item--active{% endif %}">
+    <a href="/confirmation">Confirm and submit</a>
+  </div>
+
+</div>
