@@ -48,7 +48,7 @@
   <!-- Dynamic navigation bar -->
   <div class="custom-nav">
     <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
-      <a href="/navigation">Navigation</a>
+      <a href="/navigation">Start</a>
     </div>
 
     {% if journey.includes('upload-group') %}
@@ -59,7 +59,7 @@
 
     {% if journey.includes('upload-financial') %}
       <div class="custom-nav__item {% if currentPage == 'upload-financial' %}custom-nav__item--active{% endif %}">
-        <a href="/upload-financial">Financial Model</a>
+        <a href="/upload-financial">Financial Data</a>
       </div>
     {% endif %}
 
@@ -86,7 +86,7 @@
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="confirm" name="confirm" type="checkbox">
             <label class="govuk-label govuk-checkboxes__label" for="confirm">
-              I confirm everything I submitted is done to the best of my knowledge
+              I confirm that the information I am providing is accurate and complete.
             </label>
           </div>
         </div>

@@ -52,7 +52,7 @@
 
     <!-- Always show first tab -->
     <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
-      <a href="/navigation">Navigation</a>
+      <a href="/navigation">Start</a>
     </div>
 
     {% set journey = journey or [] %}
@@ -66,7 +66,7 @@
 
     {% if journey.includes('upload-financial') %}
       <div class="custom-nav__item {% if currentPage == 'upload-financial' %}custom-nav__item--active{% endif %}">
-        <a href="/upload-financial">Financial Model</a>
+        <a href="/upload-financial">Financial Data</a>
       </div>
     {% endif %}
 
@@ -89,11 +89,13 @@
     <div class="govuk-grid-column-two-thirds">
 
       <h1 class="govuk-heading-l">
-        Upload your quarterly financial data.
+        Upload your quarterly financial data </h1>
+ 
 
-      <p>
-        Your data must be in the Financial Oversight Scheme template sent to you by email.
-      </p>
+      {{ govukInsetText({
+        text: "Your data must be in the Financial Oversight Scheme template sent to you by email."
+      }) }}
+
 
 
         <div class="govuk-form-group">

@@ -39,7 +39,7 @@
   <div class="custom-nav">
     <!-- Always show first tab -->
     <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
-      <a href="/navigation">Navigation</a>
+      <a href="/navigation">Start</a>
     </div>
 
     <!-- Dynamic middle tabs -->
@@ -51,7 +51,7 @@
 
     {% if journey.includes('upload-financial') %}
       <div class="custom-nav__item {% if currentPage == 'upload-financial' %}custom-nav__item--active{% endif %}">
-        <a href="/upload-financial">Financial Model</a>
+        <a href="/upload-financial">Financial Data</a>
       </div>
     {% endif %}
 
@@ -81,7 +81,7 @@
       <div class="govuk-checkboxes">
         <div class="govuk-checkboxes__item">
           <input class="govuk-checkboxes__input" id="structure" name="documents" type="checkbox" value="upload-group">
-          <label class="govuk-label govuk-checkboxes__label" for="structure">Company group structure</label>
+          <label class="govuk-label govuk-checkboxes__label" for="structure">Company group structure and ownership</label>
         </div>
         <div class="govuk-checkboxes__item">
           <input class="govuk-checkboxes__input" id="model" name="documents" type="checkbox" value="upload-financial">

@@ -53,7 +53,7 @@
 
     <!-- Always show first tab -->
     <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
-      <a href="/navigation">Navigation</a>
+      <a href="/navigation">Start</a>
     </div>
 
     <!-- Middle tabs: only show if in journey -->
@@ -65,7 +65,7 @@
 
     {% if journey.includes('upload-financial') %}
       <div class="custom-nav__item {% if currentPage == 'upload-financial' %}custom-nav__item--active{% endif %}">
-        <a href="/upload-financial">Financial Model</a>
+        <a href="/upload-financial">Financial Data</a>
       </div>
     {% endif %}
 
@@ -87,7 +87,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
   <h1 class="govuk-heading-l">Upload you company's group structure and ownership</h1>
-  <p class="govuk-body">we use this information to confirm which parts of your group you need to provide financial data for.</p>
+  <p class="govuk-body">We use this information to confirm which parts of your group you need to provide financial data for.</p>
 
 
   <div class="govuk-form-group">
