@@ -61,19 +61,19 @@
     <!-- Middle tabs: only show if in journey -->
     {% if journey.includes('upload-group') %}
       <div class="custom-nav__item {% if currentPage == 'upload-group' %}custom-nav__item--active{% endif %}">
-        <a href="/upload-group">Group Structure</a>
+        <a href="/upload-group">Group structure</a>
       </div>
     {% endif %}
 
     {% if journey.includes('upload-financial') %}
       <div class="custom-nav__item {% if currentPage == 'upload-financial' %}custom-nav__item--active{% endif %}">
-        <a href="/upload-financial">Financial Data</a>
+        <a href="/upload-financial">Financial data</a>
       </div>
     {% endif %}
 
     {% if journey.includes('upload-additional') %}
       <div class="custom-nav__item {% if currentPage == 'upload-additional' %}custom-nav__item--active{% endif %}">
-        <a href="/upload-additional">Additional Documents</a>
+        <a href="/upload-additional">Additional documents</a>
       </div>
     {% endif %}
 
@@ -113,7 +113,7 @@
   <fieldset class="govuk-fieldset">
     <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
       <h2 class="govuk-fieldset__heading">
-        Have you been asked to provide a Risk and Recovery Plan (RRP)?
+        Have you been asked to provide a Recovery and Resolution Plan (RRP)?
       </h2>
     </legend>
 
@@ -139,7 +139,7 @@
 
         <div class="govuk-form-group">
           <label class="govuk-label" for="file-upload-1">
-            Upload your Risk and Recovery Plan
+            Upload your Recovery and Resolution Plan
           </label>
 
           <div class="govuk-drop-zone" data-module="govuk-file-upload">
