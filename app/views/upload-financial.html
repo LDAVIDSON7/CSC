@@ -98,6 +98,7 @@
 
 
 
+
         <div class="govuk-form-group">
   <label class="govuk-label" for="file-upload-1">
     Upload a file
@@ -108,6 +109,32 @@
     <input class="govuk-file-upload" id="file-upload-1" name="fileUpload1" type="file">
   </div>
 </div>
+
+{{ govukSelect({
+  id: "sort",
+  name: "sort",
+  label: {
+    text: "Select quarter"
+  },
+  items: [
+    {
+      value: "Q1",
+      text: "Q1"
+    },
+    {
+      value: "Q2",
+      text: "Q2"
+    },
+   {
+      value: "Q3",
+      text: "Q3"
+    },
+   {
+      value: "Q4",
+      text: "Q4"
+    }
+  ]
+}) }}
    
       <form method="post" action="/upload-financial">
   <input type="hidden" name="pageSubmitted" value="true">

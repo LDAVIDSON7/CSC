@@ -93,20 +93,12 @@
 
         <br>
 
-        <button type="submit" class="govuk-button" id="submit-button" disabled> Confirm and submit</button>
+        <button type="submit" class="govuk-button" id="submit-button" > Confirm and submit</button>
       </form>
 
     </div>
   </div>
 </div>
 
-<script>
-  // Enable the submit button when checkbox is checked
-  const checkbox = document.getElementById('confirm')
-  const submitButton = document.getElementById('submit-button')
 
-  checkbox.addEventListener('change', function() {
-    submitButton.disabled = !checkbox.checked
-  })
-</script>
 {% endblock %}

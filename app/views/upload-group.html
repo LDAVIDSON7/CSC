@@ -102,6 +102,15 @@
   </div>
 </div>
 
+{{ govukInput({
+  label: {
+    text: "Document relevant changes",
+    classes: "govuk-label--m"
+  },
+  id: "event-name",
+  name: "eventName"
+}) }}
+
 <form method="post" action="/upload-group" novalidate data-novalidate="true">
   <input type="hidden" name="pageSubmitted" value="true">
   {{ govukButton({ text: "Continue" }) }}
