@@ -47,8 +47,7 @@
 {% block content %}
 
 <div class="govuk-width-container">
-
-  <!-- Dynamic navigation bar -->
+ <!-- Dynamic navigation bar -->
   <div class="custom-nav">
 
     <!-- Always show first tab -->
@@ -56,7 +55,9 @@
       <a href="/navigation">Start</a>
     </div>
 
-    <!-- Middle tabs: only show if in journey -->
+    {% set journey = journey or [] %}
+
+    <!-- Middle tabs: only show if selected -->
     {% if journey.includes('upload-group') %}
       <div class="custom-nav__item {% if currentPage == 'upload-group' %}custom-nav__item--active{% endif %}">
         <a href="/upload-group">Group structure</a>
@@ -81,42 +82,35 @@
     </div>
 
   </div>
+  
+
 
  <br> 
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-  <h1 class="govuk-heading-l">Upload your group structure and ownership details
-</h1>
-  <p class="govuk-body">We use this information to confirm which parts of your group you need to provide financial data for.</p>
 
-{{ govukInsetText({
-  text: "If there have been any changes to your group structure, you must upload the updated documents."
-}) }}
-  <div class="govuk-form-group">
-  <label class="govuk-label" for="file-upload-1">
-    Upload a file
-  </label>
-  <div
-    class="govuk-drop-zone"
-    data-module="govuk-file-upload">
-    <input class="govuk-file-upload" id="file-upload-1" name="fileUpload1" type="file">
-  </div>
-</div>
-
-{{ govukTextarea({
-  id: "",
+{{ govukRadios({
   name: "",
-  label: {
-    text: "Provide details of any changes (optional)",
-    isPageHeading: true,
-    classes: "govuk-label--s"
+  fieldset: {
+    legend: {
+      text: "Do you need to provide group structure?",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
   },
-  value: data.optional
+  value: data.option,
+  items: [
+    {
+      value: "Yes",
+      text: "Yes"
+    },
+    {
+      value: "No",
+      text: "No"
+    }
+  ]
 }) }}
-
-
-
 <form method="post" action="/upload-group" novalidate data-novalidate="true">
   <input type="hidden" name="pageSubmitted" value="true">
   {{ govukButton({ text: "Continue" }) }}

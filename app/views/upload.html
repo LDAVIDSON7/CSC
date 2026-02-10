@@ -1,0 +1,146 @@
+
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Financial Model – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block head %}
+{{ super() }}
+<style>
+.custom-nav {
+  display: flex;
+  gap: 2rem;
+  padding: 1rem 0 0 0;
+  border-bottom: 1px solid #b1b4b6;
+}
+
+.custom-nav__item {
+  padding-bottom: 0;
+  margin-bottom: -1px; /* pulls underline down */
+}
+
+.custom-nav__item a {
+  text-decoration: none;
+  color: #0b0c0c;
+  font-size: 1.1rem;
+}
+
+.custom-nav__item--active {
+  border-bottom: 4px solid #0b0c0c;
+}
+
+.custom-nav__item--active a {
+  font-weight: bold;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+
+
+  <br>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-l">
+        Document upload</h1>
+ 
+
+      {{ govukInsetText({
+        text: "You must upload the documents as requested by the financial oversight scheme sent to you by email. You will be given the opportunity to upload multiple documents."
+      }) }}
+
+
+      {{ govukRadios({
+        name: "",
+        fieldset: {
+          legend: {
+            text: "Select the document you need to upload",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        value: data.upload,
+       items: [
+    {
+      value: "Group structure and ownership",
+      text: "Company group structure and ownership"
+    },
+    {
+      value: "Quarterly financial data",
+      text: "Quarterly financial data"
+    },
+   {
+      value: "Recovery and resolution plan",
+      text: "Recovery and resolution plan"
+    },
+   {
+      value: "Other",
+      text: "Other"
+    }
+  ]
+}) }}
+
+{{ govukSelect({
+  id: "sort",
+  name: "sort",
+  label: {
+    text: "Select the document you need to upload ",
+    classes: govuk-label--m
+  },
+  items: [
+    {
+      value: "Group structure and ownership",
+      text: "Company group structure and ownership"
+    },
+    {
+      value: "Quarterly financial data",
+      text: "Quarterly financial data"
+    },
+   {
+      value: "Recovery and resolution plan",
+      text: "Recovery and resolution plan"
+    },
+   {
+      value: "Other",
+      text: "Other"
+    }
+  ]
+}) }}
+
+
+        <div class="govuk-form-group">
+  <label class="govuk-label" for="file-upload-1">
+    Upload a file
+  </label>
+  <div
+    class="govuk-drop-zone"
+    data-module="govuk-file-upload">
+    <input class="govuk-file-upload" id="file-upload-1" name="fileUpload1" type="file">
+  </div>
+</div>
+
+
+   
+      <form method="post" action="/upload-financial">
+  <input type="hidden" name="pageSubmitted" value="true">
+  {{ govukButton({ text: "Continue" }) }}
+</form>
+
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

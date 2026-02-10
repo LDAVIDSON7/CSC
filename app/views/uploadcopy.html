@@ -1,0 +1,145 @@
+
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Financial Model – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block head %}
+{{ super() }}
+<style>
+.custom-nav {
+  display: flex;
+  gap: 2rem;
+  padding: 1rem 0 0 0;
+  border-bottom: 1px solid #b1b4b6;
+}
+
+.custom-nav__item {
+  padding-bottom: 0;
+  margin-bottom: -1px; /* pulls underline down */
+}
+
+.custom-nav__item a {
+  text-decoration: none;
+  color: #0b0c0c;
+  font-size: 1.1rem;
+}
+
+.custom-nav__item--active {
+  border-bottom: 4px solid #0b0c0c;
+}
+
+.custom-nav__item--active a {
+  font-weight: bold;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-l">Document upload</h1>
+
+      {{ govukInsetText({
+        text: "You must upload the documents as requested by the scheme sent to you by email. You will be given the opportunity to upload multiple documents."
+      }) }}
+
+      <form method="post" action="/upload-financial" enctype="multipart/form-data" id="upload-form">
+        <div id="upload-list" data-count="1">
+          <!-- First row -->
+          <div class="upload-group" data-index="0">
+            {{ govukSelect({
+              id: "documentType-0",
+              name: "uploads[0][type]",
+              label: { text: "Select a document to upload", classes: "govuk-label--m" },
+              items: [
+                { value: "Group structure and ownership", text: "Company group structure and ownership" },
+                { value: "Quarterly financial data", text: "Quarterly financial data" },
+                { value: "Recovery and resolution plan", text: "Recovery and resolution plan" },
+                { value: "Other", text: "Other" }
+              ]
+            }) }}
+
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="file-upload-0">Upload a file</label>
+              <div class="govuk-drop-zone" data-module="govuk-file-upload">
+                <input class="govuk-file-upload" id="file-upload-0" name="uploads[0][file]" type="file">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {{ govukButton({
+          text: "Add another",
+          classes: "govuk-button--secondary",
+          attributes: { id: "add-another" }
+        }) }}
+<br>
+        {{ govukButton({ text: "Continue" }) }}
+      </form>
+
+      <!-- Hidden template for cloning -->
+      <template id="upload-template">
+        <div class="upload-group" data-index="__INDEX__">
+          {{ govukSelect({
+            id: "documentType-__INDEX__",
+            name: "uploads[__INDEX__][type]",
+            label: { text: "Select the document you need to upload", classes: "govuk-label--m" },
+            items: [
+              { value: "Group structure and ownership", text: "Company group structure and ownership" },
+              { value: "Quarterly financial data", text: "Quarterly financial data" },
+              { value: "Recovery and resolution plan", text: "Recovery and resolution plan" },
+              { value: "Other", text: "Other" }
+            ]
+          }) }}
+
+          <div class="govuk-form-group">
+              <label class="govuk-label" for="file-upload-0">Upload a file</label>
+              <div class="govuk-drop-zone" data-module="govuk-file-upload">
+                <input class="govuk-file-upload" id="file-upload-0" name="uploads[0][file]" type="file">
+              </div>
+          </div>
+        </div>
+      </template>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var addBtn = document.getElementById('add-another');
+    var list = document.getElementById('upload-list');
+    var tpl = document.getElementById('upload-template');
+
+    if (!addBtn || !list || !tpl) return;
+
+    addBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      var nextIndex = parseInt(list.getAttribute('data-count'), 10) || 1;
+      var html = tpl.innerHTML.replaceAll('__INDEX__', nextIndex);
+      var wrapper = document.createElement('div');
+      wrapper.innerHTML = html.trim();
+
+      var newGroup = wrapper.firstElementChild;
+      list.appendChild(newGroup);
+
+      list.setAttribute('data-count', String(nextIndex + 1));
+
+      // If you have JS modules for the drop-zone, re-init them here as needed.
+      // Example (if using GOV.UK Frontend modules): window.GOVUK?.frontend?.initAll();
+    });
+  })();
+</script>
+{% endblock %}
