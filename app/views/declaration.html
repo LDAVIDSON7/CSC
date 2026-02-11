@@ -15,16 +15,20 @@
 {% block head %}
 {{ super() }}
 <style>
+
 .custom-nav {
   display: flex;
+  flex-wrap: wrap;     /* 👈 allows tabs to wrap onto multiple lines */
   gap: 2rem;
-  padding: 1rem 0 0 0;
+  padding: 1rem 0 0 2%;
   border-bottom: 1px solid #b1b4b6;
 }
 
 .custom-nav__item {
-  padding-bottom: 0; 
-  margin-bottom: -1px; 
+   flex: 0 1 50;
+  padding-bottom: 0;
+  margin-bottom: -1px;
+  margin-top: 0.225rem; /* 👈 adds spacing between wrapped rows */
 }
 
 .custom-nav__item a {
@@ -40,39 +44,46 @@
 .custom-nav__item--active a {
   font-weight: bold;
 }
+
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="govuk-width-container">
-  <!-- Dynamic navigation bar -->
-  <div class="custom-nav">
-    <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
-      <a href="/navigation">Start</a>
-    </div>
 
-    {% if journey.includes('upload-group') %}
-      <div class="custom-nav__item {% if currentPage == 'upload-group' %}custom-nav__item--active{% endif %}">
-        <a href="/upload-group">Group structure</a>
-      </div>
-    {% endif %}
+<div class="custom-nav">
 
-    {% if journey.includes('upload-financial') %}
-      <div class="custom-nav__item {% if currentPage == 'upload-financial' %}custom-nav__item--active{% endif %}">
-        <a href="/upload-financial">Financial data</a>
-      </div>
-    {% endif %}
-
-    {% if journey.includes('upload-additional') %}
-      <div class="custom-nav__item {% if currentPage == 'upload-additional' %}custom-nav__item--active{% endif %}">
-        <a href="/upload-additional">Additional documents</a>
-      </div>
-    {% endif %}
-
-    <div class="custom-nav__item {% if currentPage == 'declaration' %}custom-nav__item--active{% endif %}">
-      <a href="/declaration">Confirm and submit</a>
-    </div>
+  <!-- START -->
+  <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
+    <a href="/navigation">Start</a>
   </div>
+
+  <!-- DYNAMIC TABS -->
+  {% for page in journey %}
+    <div class="custom-nav__item {% if currentPage == page %}custom-nav__item--active{% endif %}">
+
+      {% if page == 'upload-group' %}
+        <a href="/upload-group">Group structure</a>
+
+      {% elif page == 'upload-financial' %}
+        <a href="/upload-financial">Financial data</a>
+
+      {% elif page == 'upload-rrp' %}
+        <a href="/upload-rrp">Recovery and resolution plan</a>
+
+      {% elif page == 'upload-additional' %}
+        <a href="/upload-additional">Additional documents</a>
+      {% endif %}
+
+    </div>
+  {% endfor %}
+
+  <!-- CONFIRM -->
+  <div class="custom-nav__item {% if currentPage == 'declaration' %}custom-nav__item--active{% endif %}">
+    <a href="/declaration">Confirm and submit</a>
+  </div>
+
+</div>
+    
 
   <br>
 

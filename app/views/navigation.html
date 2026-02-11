@@ -10,62 +10,69 @@
 {% block head %}
 {{ super() }}
 <style>
-  .custom-nav {
-    display: flex;
-    gap: 2rem;
-    padding: 1rem 0 0 0;
-    border-bottom: 1px solid #b1b4b6;
-  }
-  .custom-nav__item {
-    padding-bottom: 0; 
-    margin-bottom: -1px; 
-  }
-  .custom-nav__item a {
-    text-decoration: none;
-    color: #0b0c0c;
-    font-size: 1.1rem;
-  }
-  .custom-nav__item--active {
-    border-bottom: 4px solid #0b0c0c;
-  }
-  .custom-nav__item--active a {
-    font-weight: bold;
-  }
+
+.custom-nav {
+  display: flex;
+  flex-wrap: wrap;     /* 👈 allows tabs to wrap onto multiple lines */
+  gap: 2rem;
+  padding: 1rem 0 0 0;
+  border-bottom: 1px solid #b1b4b6;
+}
+
+.custom-nav__item {
+   flex: 0 1 25;
+  padding-bottom: 0;
+  margin-bottom: -1px;
+  margin-top: 0.25rem; /* 👈 adds spacing between wrapped rows */
+}
+
+.custom-nav__item a {
+  text-decoration: none;
+  color: #0b0c0c;
+  font-size: 1.1rem;
+}
+
+.custom-nav__item--active {
+  border-bottom: 4px solid #0b0c0c;
+}
+
+.custom-nav__item--active a {
+  font-weight: bold;
+}
+
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="govuk-width-container">
   <div class="custom-nav">
-    <!-- Always show first tab -->
-    <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
-      <a href="/navigation">Start</a>
-    </div>
 
-    <!-- Dynamic middle tabs -->
-    {% if journey.includes('upload-group') %}
-      <div class="custom-nav__item {% if currentPage == 'upload-group' %}custom-nav__item--active{% endif %}">
-        <a href="/upload-group">Group structure</a>
-      </div>
-    {% endif %}
-
-    {% if journey.includes('upload-financial') %}
-      <div class="custom-nav__item {% if currentPage == 'upload-financial' %}custom-nav__item--active{% endif %}">
-        <a href="/upload-financial">Financial data</a>
-      </div>
-    {% endif %}
-
-    {% if journey.includes('upload-additional') %}
-      <div class="custom-nav__item {% if currentPage == 'upload-additional' %}custom-nav__item--active{% endif %}">
-        <a href="/upload-additional">Additional documents</a>
-      </div>
-    {% endif %}
-
-    <!-- Always show last tab -->
-    <div class="custom-nav__item {% if currentPage == 'confirm-submit' %}custom-nav__item--active{% endif %}">
-      <a href="">Confirm and submit</a>
-    </div>
+  <!-- ALWAYS SHOW START -->
+  <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
+    <a href="/navigation">Start</a>
   </div>
+
+  <!-- DYNAMIC MIDDLE TABS -->
+  {% for page in journey %}
+    <div class="custom-nav__item {% if currentPage == page %}custom-nav__item--active{% endif %}">
+      {% if page == 'upload-group' %}
+        <a href="/upload-group">Group structure</a>
+      {% elif page == 'upload-financial' %}
+        <a href="/upload-financial">Financial data</a>
+      {% elif page == 'upload-rrp' %}
+        <a href="/upload-rrp">Recovery and resolution plan</a>
+      {% elif page == 'upload-additional' %}
+        <a href="/upload-additional">Additional documents</a>
+      {% endif %}
+    </div>
+  {% endfor %}
+
+  <!-- ALWAYS SHOW CONFIRM -->
+  <div class="custom-nav__item {% if currentPage == 'declaration' %}custom-nav__item--active{% endif %}">
+    <a href="/declaration">Confirm and submit</a>
+  </div>
+
+</div>
 
   <br>
     <div class="govuk-grid-row">
@@ -85,7 +92,7 @@
           <label class="govuk-label govuk-checkboxes__label" for="model">Quarterly financial data</label>
         </div>
         <div class="govuk-checkboxes__item">
-          <input class="govuk-checkboxes__input" id="additional" name="documents" type="checkbox" value="upload-additional">
+          <input class="govuk-checkboxes__input" id="additional" name="documents" type="checkbox" value="upload-rrp">
           <label class="govuk-label govuk-checkboxes__label" for="additional">Recovery and resolution plan</label>
         </div>
         <div class="govuk-checkboxes__item">

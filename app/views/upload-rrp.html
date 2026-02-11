@@ -1,4 +1,4 @@
-{% set currentPage ="upload-additional" %}
+{% set currentPage ="upload-rrp" %}
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
@@ -14,44 +14,74 @@
 
 {% block head %}
 {{ super() }}
-  <style>
-     .custom-nav {
-    display: flex;
-    gap: 2rem;
-    padding: 1rem 0 0 0;
-    border-bottom: 1px solid #b1b4b6;
+<style>
+
+.custom-nav {
+  display: flex;
+  flex-wrap: wrap;     /* 👈 allows tabs to wrap onto multiple lines */
+  gap: 2rem;
+  padding: 1rem 0 0 0;
+  border-bottom: 1px solid #b1b4b6;
 }
 
 .custom-nav__item {
-    padding-bottom: 0; 
-    margin-bottom: -1px; /* pulls underline down so it touches the grey line */
+  flex: 0 1 25;
+  padding-bottom: 0;
+  margin-bottom: -1px;
+  margin-top: 0.25rem; /* 👈 adds spacing between wrapped rows */
 }
 
 .custom-nav__item a {
-    text-decoration: none;
-    color: #0b0c0c;
-    font-size: 1.1rem;
+  text-decoration: none;
+  color: #0b0c0c;
+  font-size: 1.1rem;
 }
 
 .custom-nav__item--active {
-    border-bottom: 4px solid #0b0c0c;
+  border-bottom: 4px solid #0b0c0c;
 }
 
 .custom-nav__item--active a {
-    font-weight: bold;
+  font-weight: bold;
 }
 
-  </style>
+</style>
 {% endblock %}
 
 {% block content %}
+<div class="custom-nav">
 
-<div class="govuk-width-container">
-
-
-  
-
+  <!-- START -->
+  <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
+    <a href="/navigation">Start</a>
   </div>
+
+  <!-- DYNAMIC TABS -->
+  {% for page in journey %}
+    <div class="custom-nav__item {% if currentPage == page %}custom-nav__item--active{% endif %}">
+
+      {% if page == 'upload-group' %}
+        <a href="/upload-group">Group structure</a>
+
+      {% elif page == 'upload-financial' %}
+        <a href="/upload-financial">Financial data</a>
+
+      {% elif page == 'upload-rrp' %}
+        <a href="/upload-rrp">Recovery and resolution plan</a>
+
+      {% elif page == 'upload-additional' %}
+        <a href="/upload-additional">Additional documents</a>
+      {% endif %}
+
+    </div>
+  {% endfor %}
+
+  <!-- CONFIRM -->
+  <div class="custom-nav__item {% if currentPage == 'declaration' %}custom-nav__item--active{% endif %}">
+    <a href="/declaration">Confirm and submit</a>
+  </div>
+
+</div>
 <br> 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
@@ -80,10 +110,11 @@
 
     
 
-
-      <form method="post" action="/upload-additional">
-        {{ govukButton({ text: "Continue" }) }}
-      </form>
+<form method="post" action="/upload-rrp" novalidate data-novalidate="true">
+  <input type="hidden" name="pageSubmitted" value="true">
+  {{ govukButton({ text: "Continue" }) }}
+</form>
+</div>
 
     </div>
   </div>

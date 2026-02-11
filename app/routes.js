@@ -1,85 +1,68 @@
 const govukPrototypeKit = require('govuk-prototype-kit')
 const router = govukPrototypeKit.requests.setupRouter()
 
-// ---------------------------
-// VALID PAGE NAMES
-// ---------------------------
-const VALID_PAGES = ['upload-group', 'upload-financial', 'upload-additional']
-
-// ---------------------------
-// POST ROUTES
-// ---------------------------
-
-// Handle form submission from navigation page
+/**
+ * -------- POST: /navigation --------
+ * Build the FULL journey in the correct order:
+ * 1) Financial → upload-group, upload-financial
+ * 2) RRP
+ * 3) Additional
+ */
 router.post('/navigation', (req, res) => {
   let selected = req.body.documents
+  console.log("RAW SELECTION:", selected)
 
-  // If nothing selected, redirect back
   if (!selected) return res.redirect('/navigation')
-
-  // Ensure always an array
   if (!Array.isArray(selected)) selected = [selected]
 
-  // Filter out invalid values (prevents '_unchecked')
-  selected = selected.filter(p => VALID_PAGES.includes(p))
+  const pickedFinancial =
+    selected.includes('financial') ||
+    selected.includes('upload-financial')
 
-  // Save journey in session
-  req.session.data.journey = selected
+  const pickedRRP = selected.includes('upload-rrp')
+  const pickedAdditional = selected.includes('upload-additional')
 
-  console.log('Navigation POST — selected:', selected)
-  console.log('Saved in session:', req.session.data.journey)
+  // FULL fixed journey
+  const journey = []
 
-  // Redirect to first selected page, or navigation if none valid
-  if (selected.length === 0) return res.redirect('/navigation')
-  res.redirect(`/${selected[0]}`)
+  // If financial selected, these two MUST always appear
+  if (pickedFinancial) {
+    journey.push('upload-group')
+    journey.push('upload-financial')
+  }
+
+  if (pickedRRP) journey.push('upload-rrp')
+  if (pickedAdditional) journey.push('upload-additional')
+
+  // Save
+  req.session.data.journey = journey
+  req.session.data.pickedFinancial = pickedFinancial
+
+  console.log("FINAL JOURNEY =", journey)
+
+  // Flow entry point
+  if (pickedFinancial) return res.redirect('/groupradio')
+
+  return res.redirect(`/${journey[0]}`)
 })
 
-// Handle "Continue" button on each upload page
-router.post('/upload-group', (req, res) => nextStep(req, res, 'upload-group'))
-router.post('/upload-financial', (req, res) => nextStep(req, res, 'upload-financial'))
-router.post('/upload-additional', (req, res) => nextStep(req, res, 'upload-additional'))
-
-// ---------------------------
-// Helper: next step
-// ---------------------------
-function nextStep(req, res, currentPage) {
-  let journey = req.session.data.journey || []
-
-  // Always ensure journey is an array
-  if (!Array.isArray(journey)) journey = [journey]
-
-  console.log(`NextStep — currentPage: ${currentPage}, journey:`, journey)
-
-  // Remove any invalid entries
-  journey = journey.filter(p => VALID_PAGES.includes(p))
-
-  const index = journey.indexOf(currentPage)
-
-  if (index === -1) {
-    console.log('Current page not in journey — redirecting to /navigation')
-    return res.redirect('/navigation')
-  }
-
-  if (index === journey.length - 1) {
-    console.log('Last page reached — redirecting to /declaration')
-    return res.redirect('/declaration')
-  }
-
-  const nextPage = journey[index + 1]
-  console.log(`Redirecting to next page: /${nextPage}`)
-  res.redirect(`/${nextPage}`)
-}
-
-// ---------------------------
-// GET ROUTES
-// ---------------------------
-
-// Reset journey when visiting navigation page
+/**
+ * -------- GET ROUTES --------
+ * Pass BOTH:
+ * - journey: the full list of selected pages
+ * - currentPage
+ */
 router.get('/navigation', (req, res) => {
-  req.session.data.journey = []
   res.render('navigation', {
     currentPage: 'navigation',
-    journey: req.session.data.journey
+    journey: req.session.data.journey || []
+  })
+})
+
+router.get('/groupradio', (req, res) => {
+  res.render('groupradio', {
+    currentPage: 'groupradio',
+    journey: req.session.data.journey || []
   })
 })
 
@@ -97,6 +80,13 @@ router.get('/upload-financial', (req, res) => {
   })
 })
 
+router.get('/upload-rrp', (req, res) => {
+  res.render('upload-rrp', {
+    currentPage: 'upload-rrp',
+    journey: req.session.data.journey || []
+  })
+})
+
 router.get('/upload-additional', (req, res) => {
   res.render('upload-additional', {
     currentPage: 'upload-additional',
@@ -109,6 +99,71 @@ router.get('/declaration', (req, res) => {
     currentPage: 'declaration',
     journey: req.session.data.journey || []
   })
+})
+
+/**
+ * -------- POST: /groupradio --------
+ */
+router.post('/groupradio', (req, res) => {
+  const answer = req.body.groupNeeded
+
+  if (answer === 'yes') {
+    return res.redirect('/upload-group')
+  }
+
+  return res.redirect('/upload-financial')
+})
+
+/**
+ * -------- POST: /upload-group --------
+ */
+router.post('/upload-group', (req, res) => {
+  return res.redirect('/upload-financial')
+})
+
+/**
+ * -------- POST: /upload-financial --------
+ */
+router.post('/upload-financial', (req, res) => {
+  const journey = req.session.data.journey || []
+
+  // Find where we are
+  const index = journey.indexOf('upload-financial')
+
+  // Move to next page if exists
+  if (index !== -1 && index < journey.length - 1) {
+    return res.redirect(`/${journey[index + 1]}`)
+  }
+
+  return res.redirect('/declaration')
+})
+
+/**
+ * -------- POST: /upload-rrp --------
+ */
+router.post('/upload-rrp', (req, res) => {
+  const journey = req.session.data.journey || []
+  const index = journey.indexOf('upload-rrp')
+
+  if (index !== -1 && index < journey.length - 1) {
+    return res.redirect(`/${journey[index + 1]}`)
+  }
+
+  return res.redirect('/declaration')
+})
+
+/**
+ * -------- POST: /upload-additional --------
+ */
+router.post('/upload-additional', (req, res) => {
+  const journey = req.session.data.journey || []
+  const index = journey.indexOf('upload-additional')
+
+  if (index !== -1 && index < journey.length - 1) {
+    return res.redirect(`/${journey[index + 1]}`)
+  }
+
+  return res.redirect('/declaration')
 })
 
 module.exports = router
