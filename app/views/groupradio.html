@@ -90,25 +90,26 @@
   <div class="govuk-grid-column-two-thirds">
 
     <form method="post" action="/groupradio">
-      {{ govukRadios({
-        idPrefix: "groupNeeded",
-        name: "groupNeeded",
-        fieldset: {
-          legend: {
-            text: "Do you need to upload your group structure and ownership?",
-            isPageHeading: true,
-            classes: "govuk-fieldset__legend--l"
-          }
-        },
-        items: [
-          { value: "yes", text: "Yes" },
-          { value: "no",  text: "No"  }
-        ]
-      }) }}
+ {{ govukRadios({
+  idPrefix: "groupNeeded",
+  name: "groupNeeded",
+  fieldset: {
+    legend: {
+      text: "Have there been any changes to your group structure and ownership?",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  hint: {
+    text: "If there have been any changes since your last submission you will need to update your group strucuture details."
+  },
+  items: [
+    { value: "yes", text: "Yes" },
+    { value: "no",  text: "No"  }
+  ]
+}) }}
 
-      {{ govukButton({ text: "Continue" }) }}
-    </form>
-
+{{ govukButton({ text: "Continue" }) }}
   </div>
 </div>
 
