@@ -1,4 +1,4 @@
-{% set currentPage = "upload-financial" %}  
+{% set currentPage = "upload-financial" %}
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block beforeContent %}
+  {{ super() }}
   {{ govukBackLink({
     text: "Back",
     href: "javascript:window.history.back()"
@@ -18,17 +19,17 @@
 
 .custom-nav {
   display: flex;
-  flex-wrap: wrap;     /* 👈 allows tabs to wrap onto multiple lines */
+  flex-wrap: wrap;
   gap: 2rem;
   padding: 1rem 0 0 0;
   border-bottom: 1px solid #b1b4b6;
 }
 
 .custom-nav__item {
- flex: 0 0 auto;
+  flex: 0 0 auto;
   padding-bottom: 0;
   margin-bottom: -1px;
-  margin-top: 0.25rem; /* 👈 adds spacing between wrapped rows */
+  margin-top: 0.25rem;
 }
 
 .custom-nav__item a {
@@ -47,6 +48,7 @@
 
 </style>
 {% endblock %}
+
 {% block content %}
 
 <div class="custom-nav">
@@ -60,7 +62,7 @@
   {% for page in journey %}
     <div class="custom-nav__item {% if currentPage == page %}custom-nav__item--active{% endif %}">
       {% if page == 'upload-financial' %}
-      <a href="/upload-financial">Financial data</a>
+        <a href="/upload-financial">Financial data</a>
 
       {% elif page == 'upload-rrp' %}
         <a href="/upload-rrp">Recovery and resolution plan</a>
@@ -68,7 +70,6 @@
       {% elif page == 'upload-additional' %}
         <a href="/upload-additional">Additional documents</a>
       {% endif %}
-
     </div>
   {% endfor %}
 
@@ -78,15 +79,15 @@
   </div>
 
 </div>
-  
 
 <br>
- 
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <form method="post" action="/groupradio">
- {{ govukRadios({
+    <!-- Radios wrapped in data-module so GOV.UK JS definitely runs -->
+    <div data-module="govuk-radios">
+{{ govukRadios({
   idPrefix: "groupNeeded",
   name: "groupNeeded",
   fieldset: {
@@ -97,19 +98,43 @@
     }
   },
   hint: {
-    text: "If there have been any changes since your last submission you will need to update your group strucuture details"
+    text: "If there have been any changes since your last submission you will need to update your group structure details"
   },
   items: [
-    { value: "yes", text: "Yes" },
-    { value: "no",  text: "No"  }
+    {
+      value: "yes",
+      text: "Yes",
+      conditional: {
+        html: '
+          <div class="govuk-form-group">
+            <h3 class="govuk-heading-m">Upload your group structure and ownership details</h3>
+
+            <p class="govuk-body">
+              We use this information to confirm which parts of your group you need to provide financial data for.
+            </p>
+
+      
+
+            <label class="govuk-label" for="file-upload-1">
+              Upload a file
+            </label>
+            <div class="govuk-drop-zone" data-module="govuk-file-upload">
+              <input class="govuk-file-upload" id="file-upload-1" name="fileUpload1" type="file">
+            </div>
+          </div>
+        '
+      }
+    },
+    {
+      value: "no",
+      text: "No"
+    }
   ]
 }) }}
 
-{{ govukButton({ text: "Continue" }) }}
+    {{ govukButton({ text: "Continue" }) }}
+
   </div>
 </div>
-
-
-
 
 {% endblock %}

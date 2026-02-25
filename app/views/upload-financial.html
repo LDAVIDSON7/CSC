@@ -60,12 +60,8 @@
   <!-- DYNAMIC TABS -->
   {% for page in journey %}
     <div class="custom-nav__item {% if currentPage == page %}custom-nav__item--active{% endif %}">
-
-      {% if page == 'upload-group' %}
-        <a href="/upload-group">Group structure</a>
-
-      {% elif page == 'upload-financial' %}
-        <a href="/upload-financial">Financial data</a>
+  {% if page == 'upload-financial' %}
+      <a href="/upload-financial">Financial data</a>
 
       {% elif page == 'upload-rrp' %}
         <a href="/upload-rrp">Recovery and resolution plan</a>
@@ -111,31 +107,7 @@
   </div>
 </div>
 
-{{ govukSelect({
-  id: "sort",
-  name: "sort",
-  label: {
-    text: "Select quarter"
-  },
-  items: [
-    {
-      value: "Q1",
-      text: "Q1"
-    },
-    {
-      value: "Q2",
-      text: "Q2"
-    },
-   {
-      value: "Q3",
-      text: "Q3"
-    },
-   {
-      value: "Q4",
-      text: "Q4"
-    }
-  ]
-}) }}
+
    
       <form method="post" action="/upload-financial">
   <input type="hidden" name="pageSubmitted" value="true">

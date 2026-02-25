@@ -1,4 +1,4 @@
-{% set currentPage = "upload-group" %}  
+{% set currentPage = "upload-financial" %}  
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
@@ -60,12 +60,8 @@
   <!-- DYNAMIC TABS -->
   {% for page in journey %}
     <div class="custom-nav__item {% if currentPage == page %}custom-nav__item--active{% endif %}">
-
-      {% if page == 'upload-group' %}
-        <a href="/upload-group">Group structure</a>
-
-      {% elif page == 'upload-financial' %}
-        <a href="/upload-financial">Financial data</a>
+      {% if page == 'upload-financial' %}
+      <a href="/upload-financial">Financial data</a>
 
       {% elif page == 'upload-rrp' %}
         <a href="/upload-rrp">Recovery and resolution plan</a>
@@ -73,7 +69,6 @@
       {% elif page == 'upload-additional' %}
         <a href="/upload-additional">Additional documents</a>
       {% endif %}
-
     </div>
   {% endfor %}
 
@@ -106,16 +101,7 @@
   </div>
 </div>
 
-{{ govukTextarea({
-  id: "",
-  name: "",
-  label: {
-    text: "Provide details of any changes (optional)",
-    isPageHeading: true,
-    classes: "govuk-label--s"
-  },
-  value: data.optional
-}) }}
+
 
 
 

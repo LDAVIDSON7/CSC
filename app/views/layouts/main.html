@@ -1,22 +1,25 @@
-{#
-For guidance on how to use layouts see:
-https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
-#}
-
 {% extends "govuk-prototype-kit/layouts/govuk-branded.njk" %}
 {% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
 
 {% block header %}
-
     {{ govukHeader() }}
     {{ govukServiceNavigation({
         serviceName: serviceName
     })}}
 
+    <div class="govuk-phase-banner govuk-width-container">
+  <p class="govuk-phase-banner__content">
+    <strong class="govuk-tag govuk-phase-banner__content__tag">
+      Beta
+    </strong>
+    <span class="govuk-phase-banner__text">
+      This is a new service. Help us improve it and <a class="govuk-link" href="#">give your feedback (opens in new tab)</a>.
+    </span>
+  </p>
+</div>
 {% endblock %}
 
 <div class="custom-nav">
-
   {% for page in journey %}
     <div class="custom-nav__item {% if currentPage == page %}custom-nav__item--active{% endif %}">
       {% if page == 'upload-group' %}
@@ -32,5 +35,4 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
   <div class="custom-nav__item {% if currentPage == 'confirm-submit' %}custom-nav__item--active{% endif %}">
     <a href="/confirmation">Confirm and submit</a>
   </div>
-
 </div>
