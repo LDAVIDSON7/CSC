@@ -58,15 +58,11 @@
     <a href="/navigation">Start</a>
   </div>
 
-  <!-- DYNAMIC TABS -->
+    <!-- DYNAMIC TABS -->
   {% for page in journey %}
     <div class="custom-nav__item {% if currentPage == page %}custom-nav__item--active{% endif %}">
-
-      {% if page == 'upload-group' %}
-        <a href="/upload-group">Group structure</a>
-
-      {% elif page == 'upload-financial' %}
-        <a href="/upload-financial">Financial data</a>
+      {% if page == 'upload-financial' %}
+      <a href="/upload-financial">Quarterly submission</a>
 
       {% elif page == 'upload-rrp' %}
         <a href="/upload-rrp">Recovery and resolution plan</a>
@@ -74,7 +70,6 @@
       {% elif page == 'upload-additional' %}
         <a href="/upload-additional">Additional documents</a>
       {% endif %}
-
     </div>
   {% endfor %}
 
@@ -93,7 +88,7 @@
 
       <p>
       Check your latest email from the financial oversight scheme. It lists the additional documents you need to upload.</p>
-<p>We need these documents to support risk assessment checks.</p>
+<p>We need these documents to support ongoing risk assessments.</p>
 
     
        <div class="govuk-form-group">
