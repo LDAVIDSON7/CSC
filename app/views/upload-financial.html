@@ -61,7 +61,7 @@
   {% for page in journey %}
     <div class="custom-nav__item {% if currentPage == page %}custom-nav__item--active{% endif %}">
   {% if page == 'upload-financial' %}
-      <a href="/upload-financial">Financial data</a>
+      <a href="/upload-financial">Quarterly submission</a>
 
       {% elif page == 'upload-rrp' %}
         <a href="/upload-rrp">Recovery and resolution plan</a>
@@ -90,7 +90,7 @@
  
 
       {{ govukInsetText({
-        text: "You must enter your data into the financial oversight scheme template sent to you by email."
+        text: "You must enter your data in the financial oversight scheme template."
       }) }}
 
 

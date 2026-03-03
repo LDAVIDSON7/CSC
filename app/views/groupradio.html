@@ -60,7 +60,7 @@
   {% for page in journey %}
     <div class="custom-nav__item {% if currentPage == page %}custom-nav__item--active{% endif %}">
       {% if page == 'upload-financial' %}
-      <a href="/upload-financial">Financial data</a>
+      <a href="/upload-financial">Quarterly submission</a>
 
       {% elif page == 'upload-rrp' %}
         <a href="/upload-rrp">Recovery and resolution plan</a>
@@ -97,7 +97,7 @@
     }
   },
   hint: {
-    text: "If there have been any changes since your last submission you will need to update your group strucuture details"
+    text: "You will need to upload the latest version of your group structure documents if there have been any changes since your last submission."
   },
   items: [
     { value: "yes", text: "Yes" },
