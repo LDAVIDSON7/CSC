@@ -5,14 +5,12 @@
   Content page template – {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
-{% block beforeContent %}
-  {{ govukBackLink({
-    text: "Back",
-    href: "javascript:window.history.back()"
-  }) }}
-{% endblock %}
 
-{% block head %}
+
+{% block content %}
+<div class="govuk-width-container">
+ <h1 class="govuk-heading-xl">
+Children's Social Care Financial Oversight Scheme      </h1>
 {{ super() }}
 <style>
 
@@ -46,14 +44,13 @@
 }
 
 </style>
-{% endblock %}
-{% block content %}
+
 
 <div class="custom-nav">
 
   <!-- START -->
   <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
-    <a href="/navigation">Start</a>
+    <a href="/navigation">Select documents</a>
   </div>
 
   <!-- DYNAMIC TABS -->
@@ -85,19 +82,21 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
+     <h2 class="govuk-heading-l">
+Have there been any changes to your group structure and ownership?   </h2>
+
+<p>You will need to upload the latest version of your group structure documents if there have been any changes since your last submission.</p>
+
     <form method="post" action="/groupradio">
  {{ govukRadios({
   idPrefix: "groupNeeded",
   name: "groupNeeded",
   fieldset: {
     legend: {
-      text: "Have there been any changes to your group structure and ownership?",
+      text: "",
       isPageHeading: true,
       classes: "govuk-fieldset__legend--l"
     }
-  },
-  hint: {
-    text: "You will need to upload the latest version of your group structure documents if there have been any changes since your last submission."
   },
   items: [
     { value: "yes", text: "Yes" },
@@ -106,9 +105,15 @@
 }) }}
 
 {{ govukButton({ text: "Continue" }) }}
-  </div>
-</div>
 
+
+  </div>
+  
+</div>
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
 
 
 

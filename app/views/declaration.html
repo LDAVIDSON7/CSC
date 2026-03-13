@@ -5,14 +5,13 @@
   Confirm and submit – {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
-{% block beforeContent %}
-  {{ govukBackLink({
-    text: "Back",
-    href: "javascript:window.history.back()"
-  }) }}
-{% endblock %}
 
-{% block head %}
+
+
+{% block content %}
+<div class="govuk-width-container">
+ <h1 class="govuk-heading-xl">
+Children's Social Care Financial Oversight Scheme      </h1>
 {{ super() }}
 <style>
 
@@ -46,22 +45,19 @@
 }
 
 </style>
-{% endblock %}
-
-{% block content %}
 
 <div class="custom-nav">
 
   <!-- START -->
   <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
-    <a href="/navigation">Start</a>
+    <a href="/navigation">Select documents</a>
   </div>
 
     <!-- DYNAMIC TABS -->
   {% for page in journey %}
     <div class="custom-nav__item {% if currentPage == page %}custom-nav__item--active{% endif %}">
       {% if page == 'upload-financial' %}
-      <a href="/upload-financial">Quarterly submission</a>
+      <a href="/upload-financial">Financial data</a>
 
       {% elif page == 'upload-rrp' %}
         <a href="/upload-rrp">Recovery and resolution plan</a>
@@ -123,17 +119,7 @@
   </div>
   <div class="govuk-summary-card__content">
     <dl class="govuk-summary-list">
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Group structure and ownership details
-        </dt>
-        <dd class="govuk-summary-list__value">
-          Groupstructure26.xlsx
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> whether details are known (Person 2)</span></a>
-        </dd>
-      </div>
+      
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
 Quarterly finanical data         </dt>
@@ -148,9 +134,14 @@ Quarterly finanical data         </dt>
         <dt class="govuk-summary-list__key">
           Additional documents 
         </dt>
-        <dd class="govuk-summary-list__value">
-          Recoveryresolution26.xlsx
-        </dd>
+       
+<dd class="govuk-summary-list__value">
+    <ul class="govuk-list govuk-list--bullet">
+      <li>Recoveryresolution26.xlsx</li>
+      <li>Groupstructure26.xlsx</li>
+    </ul>
+  </dd>
+
         <dd class="govuk-summary-list__actions">
           <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> age (Person 2)</span></a>
         </dd>
@@ -183,5 +174,9 @@ Quarterly finanical data         </dt>
   </div>
 </div>
 
+ {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
 
 {% endblock %}

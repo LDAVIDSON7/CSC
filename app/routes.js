@@ -15,9 +15,7 @@ router.post('/navigation', (req, res) => {
   if (!selected) return res.redirect('/navigation')
   if (!Array.isArray(selected)) selected = [selected]
 
-  const pickedFinancial =
-    selected.includes('financial') ||
-    selected.includes('upload-financial')
+const pickedFinancial = selected.includes('upload-financial')
 
   const pickedRRP = selected.includes('upload-rrp')
   const pickedAdditional = selected.includes('upload-additional')
@@ -27,7 +25,6 @@ router.post('/navigation', (req, res) => {
 
   // If financial selected, these two MUST always appear
   if (pickedFinancial) {
-    journey.push('upload-group')
     journey.push('upload-financial')
   }
 
@@ -41,7 +38,7 @@ router.post('/navigation', (req, res) => {
   console.log("FINAL JOURNEY =", journey)
 
   // Flow entry point
-  if (pickedFinancial) return res.redirect('/groupradio')
+  if (pickedFinancial) return res.redirect('upload-financial')
 
   return res.redirect(`/${journey[0]}`)
 })
@@ -59,19 +56,7 @@ router.get('/navigation', (req, res) => {
   })
 })
 
-router.get('/groupradio', (req, res) => {
-  res.render('groupradio', {
-    currentPage: 'groupradio',
-    journey: req.session.data.journey || []
-  })
-})
 
-router.get('/upload-group', (req, res) => {
-  res.render('upload-group', {
-    currentPage: 'upload-group',
-    journey: req.session.data.journey || []
-  })
-})
 
 router.get('/upload-financial', (req, res) => {
   res.render('upload-financial', {

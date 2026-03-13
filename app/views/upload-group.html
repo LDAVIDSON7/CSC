@@ -5,14 +5,12 @@
   Content page template – {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
-{% block beforeContent %}
-  {{ govukBackLink({
-    text: "Back",
-    href: "javascript:window.history.back()"
-  }) }}
-{% endblock %}
 
-{% block head %}
+
+{% block content %}
+<div class="govuk-width-container">
+ <h1 class="govuk-heading-xl">
+Children's Social Care Financial Oversight Scheme      </h1>
 {{ super() }}
 <style>
 
@@ -46,15 +44,13 @@
 }
 
 </style>
-{% endblock %}
 
-{% block content %}
 
 <div class="custom-nav">
 
   <!-- START -->
   <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
-    <a href="/navigation">Start</a>
+    <a href="/navigation">Select documents</a>
   </div>
 
   <!-- DYNAMIC TABS -->
@@ -109,6 +105,12 @@
   <input type="hidden" name="pageSubmitted" value="true">
   {{ govukButton({ text: "Continue" }) }}
 </form>
+
+ {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+
 </div>
 
 

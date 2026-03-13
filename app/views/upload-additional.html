@@ -5,17 +5,13 @@
   Content page template – {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
-{% block beforeContent %}
-  {{ govukBackLink({
-    text: "Back",
-    href: "javascript:window.history.back()"
-  }) }}
-{% endblock %}
 
-{% block head %}
+{% block content %}
+<div class="govuk-width-container">
+ <h1 class="govuk-heading-xl">
+Children's Social Care Financial Oversight Scheme      </h1>
 {{ super() }}
 <style>
-
 .custom-nav {
   display: flex;
   flex-wrap: wrap;     /* 👈 allows tabs to wrap onto multiple lines */
@@ -46,23 +42,21 @@
 }
 
 </style>
-{% endblock %}
 
-{% block content %}
 
 
 <div class="custom-nav">
 
   <!-- START -->
   <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
-    <a href="/navigation">Start</a>
+    <a href="/navigation">Select documents</a>
   </div>
 
     <!-- DYNAMIC TABS -->
   {% for page in journey %}
     <div class="custom-nav__item {% if currentPage == page %}custom-nav__item--active{% endif %}">
       {% if page == 'upload-financial' %}
-      <a href="/upload-financial">Quarterly submission</a>
+      <a href="/upload-financial">Financial data</a>
 
       {% elif page == 'upload-rrp' %}
         <a href="/upload-rrp">Recovery and resolution plan</a>
@@ -113,6 +107,10 @@
   <input type="hidden" name="pageSubmitted" value="true">
   {{ govukButton({ text: "Continue" }) }}
 </form>
+ {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
 </div>
 
     </div>

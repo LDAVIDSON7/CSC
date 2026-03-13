@@ -5,7 +5,11 @@
 
 
 
-{% block head %}
+
+{% block content %}
+<div class="govuk-width-container">
+ <h1 class="govuk-heading-xl">
+Children's Social Care Financial Oversight Scheme      </h1>
 {{ super() }}
 <style>
 
@@ -39,15 +43,13 @@
 }
 
 </style>
-{% endblock %}
 
-{% block content %}
-<div class="govuk-width-container">
+
   <div class="custom-nav">
 
   <!-- ALWAYS SHOW START -->
   <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
-    <a href="/navigation">Start</a>
+    <a href="/navigation">Select documents</a>
   </div>
 
   <!-- DYNAMIC MIDDLE TABS -->
@@ -73,7 +75,7 @@
 </div>
 
   <br>
- <span class="govuk-caption-l"> CareTech</span>
+ <span class="govuk-caption-m"> CareTech</span>
  
      
     
@@ -83,14 +85,11 @@
   <form method="post" action="/navigation">
     <fieldset class="govuk-fieldset">
    
-    
+     <h2 class="govuk-heading-l">
+Select the documents you need to upload    </h2>
 
      
-<legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-      <h1 class="govuk-fieldset__heading">
-        Select the documents you need to upload
-      </h1>
-    </legend>
+
 
       <p>Check your latest email from the financial oversight scheme to confirm which documents you need to upload.</p>
       <p>Select all that apply</p>
@@ -98,7 +97,7 @@
       
         <div class="govuk-checkboxes__item">
           <input class="govuk-checkboxes__input" id="model" name="documents" type="checkbox" value="upload-financial">
-          <label class="govuk-label govuk-checkboxes__label" for="model">Quarterly financial data submission</label>
+          <label class="govuk-label govuk-checkboxes__label" for="model">Quarterly financial data  </label>
         </div>
       
         <div class="govuk-checkboxes__item">
