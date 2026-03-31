@@ -1,0 +1,218 @@
+{% set currentPage = "details" %}  
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Content page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+
+
+{% block content %}
+<div class="govuk-width-container">
+ <h1 class="govuk-heading-xl">
+Children's Social Care Financial Oversight Scheme      </h1>
+{{ super() }}
+<style>
+
+.custom-nav {
+  display: flex;
+  flex-wrap: wrap;     /* 👈 allows tabs to wrap onto multiple lines */
+  gap: 2rem;
+  padding: 1rem 0 0 0;
+  border-bottom: 1px solid #b1b4b6;
+}
+
+.custom-nav__item {
+ flex: 0 0 auto;
+  padding-bottom: 0;
+  margin-bottom: -1px;
+  margin-top: 0.25rem; /* 👈 adds spacing between wrapped rows */
+}
+
+.custom-nav__item a {
+  text-decoration: none;
+  color: #0b0c0c;
+  font-size: 1.1rem;
+}
+
+.custom-nav__item--active {
+  border-bottom: 4px solid #0b0c0c;
+}
+
+.custom-nav__item--active a {
+  font-weight: bold;
+}
+
+</style>
+
+
+<div class="custom-nav">
+
+  <!-- START -->
+    <div class="custom-nav__item {% if currentPage == 'details' %}custom-nav__item--active{% endif %}">
+    <a href="/navigation">Your details</a>
+  </div>
+  <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
+    <a href="/navigation">Select documents</a>
+  </div>
+
+  <!-- DYNAMIC TABS -->
+  {% for page in journey %}
+    <div class="custom-nav__item {% if currentPage == page %}custom-nav__item--active{% endif %}">
+      {% if page == 'upload-financial' %}
+      <a href="/upload-financial">Quarterly submission</a>
+
+      {% elif page == 'upload-rrp' %}
+        <a href="/upload-rrp">Recovery and resolution plan</a>
+
+      {% elif page == 'upload-additional' %}
+        <a href="/upload-additional">Additional documents</a>
+      {% endif %}
+
+    </div>
+  {% endfor %}
+
+  <!-- CONFIRM -->
+  <div class="custom-nav__item {% if currentPage == 'declaration' %}custom-nav__item--active{% endif %}">
+    <a href="/declaration">Confirm and submit</a>
+  </div>
+
+</div>
+  
+
+<br>
+ 
+
+
+
+
+
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+    
+      <h1 class="govuk-heading-l">
+        Are your organisation's details correct?
+      </h1> 
+
+      <!-- p class="govuk-body">These are the details we hold for you. By clicking continue, you are confirming that these are correct.</p -->
+      
+      <table class="govuk-table">
+
+        <tbody class="govuk-table__body">
+         
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Organisation name</th>
+            <td class="govuk-table__cell">CareTech</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">UK Provider Reference Number (UKPRN)</th>
+            <td class="govuk-table__cell">10083441  </td>
+          </tr>
+          
+         
+
+        </tbody>
+      </table>
+
+
+      
+
+   
+
+      <form class="form" action="/path/of/next/page" method="post">
+
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+          <!-- legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h2 class="govuk-fieldset__heading">
+              Are these details correct?
+            </h2 -->
+          </legend>
+          <div class="govuk-radios" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="whereDoYouLive" name="whereDoYouLive" type="radio" value="england" onclick="clickYes()">
+              <label class="govuk-label govuk-radios__label" for="whereDoYouLive">
+                Yes
+              </label>
+            </div>
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="whereDoYouLive-2" name="whereDoYouLive" type="radio" value="scotland" onclick="clickNo()">
+              <label class="govuk-label govuk-radios__label" for="whereDoYouLive-2">
+                No
+              </label>
+            </div>
+
+          </div>
+        </fieldset>
+      </div>
+      
+      <!-- https://customerhelpportal.education.gov.uk/ -->
+      
+      <div class="correctNo" style="display: none;">
+        <p class="govuk-body">If any details are incorrect, contact the <a href="https://customerhelpportal.education.gov.uk/" target="_blank">customer help portal (opens in new tab)</a>.</p>
+        <p class="govuk-body">If you need to submit financial information for a different provider, sign out and select the required provider when you sign in.</p> 
+        
+        
+      </div>
+
+      
+
+      <!-- p class="govuk-body">
+      These are the details we hold for you. By clicking continue, you are confirming that these are correct.
+      </p -->
+
+
+
+        <div class="govuk-button-group yesconti">
+          <a href="/orgtype" type="submit" class="govuk-button" data-module="govuk-button">
+              Continue
+            </a>
+        </div>
+        <div class="govuk-button-group noconti" style="display: none;">
+          <a href="/orgtype" type="submit" class="govuk-button" data-module="govuk-button">
+              Sign out
+            </a>
+        </div>
+
+       
+
+      </form>
+
+    </div>
+  </div>
+
+  
+
+
+
+{% endblock %}
+
+{% block pageScripts %}
+
+
+  <script
+    src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+    integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
+    crossorigin="anonymous">
+  </script>
+
+  <script>
+
+  function clickYes(){
+    $(".correctNo").css("display","none");
+    $(".yesconti").css("display","block");
+    $(".noconti").css("display","none");
+  };
+
+  function clickNo(){
+    $(".correctNo").css("display","block");
+    $(".yesconti").css("display","none");
+    $(".noconti").css("display","block");
+  };
+
+  </script>
+
+
+{% endblock %}
