@@ -1,0 +1,124 @@
+{% set currentPage = "details" %}  
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Content page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+
+
+{% block content %}
+<div class="govuk-width-container">
+ <h1 class="govuk-heading-xl">
+Children's Social Care Financial Oversight Scheme      </h1>
+{{ super() }}
+<style>
+
+.custom-nav {
+  display: flex;
+  flex-wrap: wrap;     /* 👈 allows tabs to wrap onto multiple lines */
+  gap: 2rem;
+  padding: 1rem 0 0 0;
+  border-bottom: 1px solid #b1b4b6;
+}
+
+.custom-nav__item {
+ flex: 0 0 auto;
+  padding-bottom: 0;
+  margin-bottom: -1px;
+  margin-top: 0.25rem; /* 👈 adds spacing between wrapped rows */
+}
+
+.custom-nav__item a {
+  text-decoration: none;
+  color: #0b0c0c;
+  font-size: 1.1rem;
+}
+
+.custom-nav__item--active {
+  border-bottom: 4px solid #0b0c0c;
+}
+
+.custom-nav__item--active a {
+  font-weight: bold;
+}
+
+</style>
+
+
+
+
+  
+ 
+
+
+
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+    
+      <h1 class="govuk-heading-m">
+        File upload
+      </h1> 
+
+      <p> Upload the documnets you would like to share with providers here. 
+      </p>
+
+      {{ govukInsetText({
+        text: "You must include the proivders UKPRN in the file name"
+      }) }}
+         <div class="govuk-form-group">
+  <label class="govuk-label" for="file-upload-1">
+    Upload a file
+  </label>
+  <div
+    class="govuk-drop-zone"
+    data-module="govuk-file-upload">
+    <input class="govuk-file-upload" id="file-upload-1" name="fileUpload1" type="file">
+  </div>
+</div>
+     
+
+
+      
+  {{ govukButton({ text: "Continue" }) }}
+
+   
+      
+      
+  </div>
+
+  
+
+
+
+{% endblock %}
+
+{% block pageScripts %}
+
+
+  <script
+    src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+    integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
+    crossorigin="anonymous">
+  </script>
+
+  <script>
+
+  function clickYes(){
+    $(".correctNo").css("display","none");
+    $(".yesconti").css("display","block");
+    $(".noconti").css("display","none");
+  };
+
+  function clickNo(){
+    $(".correctNo").css("display","block");
+    $(".yesconti").css("display","none");
+    $(".noconti").css("display","block");
+  };
+
+  </script>
+
+
+{% endblock %}

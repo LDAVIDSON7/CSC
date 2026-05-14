@@ -1,54 +1,124 @@
 const govukPrototypeKit = require('govuk-prototype-kit')
 const router = govukPrototypeKit.requests.setupRouter()
 
-/**
- * -------- POST: /navigation --------
- * Build the FULL journey in the correct order:
- * 1) Financial → upload-group, upload-financial
- * 2) RRP
- * 3) Additional
- */
+// ==========================================
+// STEP 1: ACTION PAGE (entry selection)
+// ==========================================
 router.post('/navigation', (req, res) => {
   let selected = req.body.documents
-  console.log("RAW SELECTION:", selected)
 
   if (!selected) return res.redirect('/navigation')
   if (!Array.isArray(selected)) selected = [selected]
 
-const pickedFinancial = selected.includes('upload-financial')
+  const pickedDownload = selected.includes('download')
+  const pickedUpload = selected.includes('upload') // ✅ FIXED
 
-  const pickedRRP = selected.includes('upload-rrp')
-  const pickedAdditional = selected.includes('upload-additional')
-
-  // FULL fixed journey
   const journey = []
 
-  // If financial selected, these two MUST always appear
+  if (pickedDownload) {
+    journey.push('download')
+  }
+
+  if (pickedUpload) {
+    journey.push('navigation')
+  }
+
+  req.session.data.journey = journey
+
+  console.log("JOURNEY AFTER ACTION =", journey)
+
+  // Decide where to go first
+  if (pickedDownload) {
+    return res.redirect('/download')
+  }
+
+  if (pickedUpload) {
+    return res.redirect('/navigation')
+  }
+
+  return res.redirect('/navigation')
+})
+
+
+// ==========================================
+// STEP 2: NAVIGATION PAGE (upload choices)
+// ==========================================
+router.post('/navigation-step', (req, res) => {
+  let selected = req.body.documents
+
+  if (!selected) return res.redirect('/navigation')
+  if (!Array.isArray(selected)) selected = [selected]
+
+  const pickedFinancial = selected.includes('upload-financial')
+  const pickedAdditional = selected.includes('upload-additional')
+
+  let journey = req.session.data.journey || []
+
+  // Remove old upload steps
+  const navIndex = journey.indexOf('navigation')
+  if (navIndex !== -1) {
+    journey = journey.slice(0, navIndex + 1)
+  }
+
+  // Add new steps
   if (pickedFinancial) {
     journey.push('upload-financial')
   }
 
-  if (pickedRRP) journey.push('upload-rrp')
-  if (pickedAdditional) journey.push('upload-additional')
+  if (pickedAdditional) {
+    journey.push('upload-additional')
+  }
 
-  // Save
   req.session.data.journey = journey
-  req.session.data.pickedFinancial = pickedFinancial
 
-  console.log("FINAL JOURNEY =", journey)
+  console.log("FULL JOURNEY AFTER NAV =", journey)
 
-  // Flow entry point
-  if (pickedFinancial) return res.redirect('upload-financial')
+  // Route to first page
+  if (pickedFinancial) {
+    return res.redirect('/upload-financial')
+  }
 
-  return res.redirect(`/${journey[0]}`)
+  if (pickedAdditional) {
+    return res.redirect('/upload-additional')
+  }
+
+  return res.redirect('/navigation')
 })
 
-/**
- * -------- GET ROUTES --------
- * Pass BOTH:
- * - journey: the full list of selected pages
- * - currentPage
- */
+
+// ==========================================
+// HELPER: NEXT STEP
+// ==========================================
+function nextStep(req, res, page) {
+  const journey = req.session.data.journey || []
+  const index = journey.indexOf(page)
+
+  if (index !== -1 && index < journey.length - 1) {
+    return res.redirect(`/${journey[index + 1]}`)
+  }
+
+  return res.redirect('/declaration')
+}
+
+
+// ==========================================
+// DOWNLOAD
+// ==========================================
+router.get('/download', (req, res) => {
+  res.render('download', {
+    currentPage: 'download',
+    journey: req.session.data.journey || []
+  })
+})
+
+router.post('/download', (req, res) => {
+  return nextStep(req, res, 'download')
+})
+
+
+// ==========================================
+// NAVIGATION PAGE
+// ==========================================
 router.get('/navigation', (req, res) => {
   res.render('navigation', {
     currentPage: 'navigation',
@@ -57,7 +127,9 @@ router.get('/navigation', (req, res) => {
 })
 
 
-
+// ==========================================
+// UPLOAD: FINANCIAL
+// ==========================================
 router.get('/upload-financial', (req, res) => {
   res.render('upload-financial', {
     currentPage: 'upload-financial',
@@ -65,13 +137,14 @@ router.get('/upload-financial', (req, res) => {
   })
 })
 
-router.get('/upload-rrp', (req, res) => {
-  res.render('upload-rrp', {
-    currentPage: 'upload-rrp',
-    journey: req.session.data.journey || []
-  })
+router.post('/upload-financial', (req, res) => {
+  return nextStep(req, res, 'upload-financial')
 })
 
+
+// ==========================================
+// UPLOAD: ADDITIONAL
+// ==========================================
 router.get('/upload-additional', (req, res) => {
   res.render('upload-additional', {
     currentPage: 'upload-additional',
@@ -79,76 +152,19 @@ router.get('/upload-additional', (req, res) => {
   })
 })
 
+router.post('/upload-additional', (req, res) => {
+  return nextStep(req, res, 'upload-additional')
+})
+
+
+// ==========================================
+// DECLARATION
+// ==========================================
 router.get('/declaration', (req, res) => {
   res.render('declaration', {
     currentPage: 'declaration',
     journey: req.session.data.journey || []
   })
-})
-
-/**
- * -------- POST: /groupradio --------
- */
-router.post('/groupradio', (req, res) => {
-  const answer = req.body.groupNeeded
-
-  if (answer === 'yes') {
-    return res.redirect('/upload-group')
-  }
-
-  return res.redirect('/upload-financial')
-})
-
-/**
- * -------- POST: /upload-group --------
- */
-router.post('/upload-group', (req, res) => {
-  return res.redirect('/upload-financial')
-})
-
-/**
- * -------- POST: /upload-financial --------
- */
-router.post('/upload-financial', (req, res) => {
-  const journey = req.session.data.journey || []
-
-  // Find where we are
-  const index = journey.indexOf('upload-financial')
-
-  // Move to next page if exists
-  if (index !== -1 && index < journey.length - 1) {
-    return res.redirect(`/${journey[index + 1]}`)
-  }
-
-  return res.redirect('/declaration')
-})
-
-/**
- * -------- POST: /upload-rrp --------
- */
-router.post('/upload-rrp', (req, res) => {
-  const journey = req.session.data.journey || []
-  const index = journey.indexOf('upload-rrp')
-
-  if (index !== -1 && index < journey.length - 1) {
-    return res.redirect(`/${journey[index + 1]}`)
-  }
-
-  return res.redirect('/declaration')
-})
-
-/**
- * -------- POST: /upload-additional --------
- */
-router.post('/upload-additional', (req, res) => {
-  const journey = req.session.data.journey || []
-  const index = journey.indexOf('upload-additional')
-
-  if (index !== -1 && index < journey.length - 1) {
-    return res.redirect(`/${journey[index + 1]}`)
-  }
-
-  return res.redirect('/declaration')
 })
 
 module.exports = router

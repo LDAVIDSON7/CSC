@@ -1,0 +1,130 @@
+{% set currentPage = "action" %}
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}Required Documents – {{ serviceName }}{% endblock %}
+
+
+
+
+{% block content %}
+<div class="govuk-width-container">
+ <h1 class="govuk-heading-xl">
+Children's Social Care Financial Oversight Scheme      </h1>
+{{ super() }}
+<style>
+
+.custom-nav {
+  display: flex;
+  flex-wrap: wrap;     /* 👈 allows tabs to wrap onto multiple lines */
+  gap: 2rem;
+  padding: 1rem 0 0 0;
+  border-bottom: 1px solid #b1b4b6;
+}
+
+.custom-nav__item {
+   flex: 0 1 25;
+  padding-bottom: 0;
+  margin-bottom: -1px;
+  margin-top: 0.25rem; /* 👈 adds spacing between wrapped rows */
+}
+
+.custom-nav__item a {
+  text-decoration: none;
+  color: #0b0c0c;
+  font-size: 1.1rem;
+}
+
+.custom-nav__item--active {
+  border-bottom: 4px solid #0b0c0c;
+}
+
+.custom-nav__item--active a {
+  font-weight: bold;
+}
+
+</style>
+
+
+  <div class="custom-nav">
+
+  <!-- ALWAYS SHOW START -->
+   <div class="custom-nav__item {% if currentPage == 'action' %}custom-nav__item--active{% endif %}">
+    <a href="/navigation">Select an action</a>
+  </div>
+  <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
+    <a href="/navigation">Download spreadsheet</a>
+  </div>
+
+  <!-- DYNAMIC MIDDLE TABS -->
+  {% for page in journey %}
+    <div class="custom-nav__item {% if currentPage == page %}custom-nav__item--active{% endif %}">
+      {% if page == 'upload-group' %}
+        <a href="/upload-group">Group structure</a>
+      {% elif page == 'upload-financial' %}
+        <a href="/upload-financial">Financial data</a>
+      {% elif page == 'upload-rrp' %}
+        <a href="/upload-rrp">Recovery and resolution plan</a>
+      {% elif page == 'upload-additional' %}
+        <a href="/upload-additional">Additional documents</a>
+      {% endif %}
+    </div>
+  {% endfor %}
+
+  <!-- ALWAYS SHOW CONFIRM -->
+ 
+
+</div>
+
+  <br>
+ <span class="govuk-caption-m"> Organisation name</span>
+ 
+     
+    
+    <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+ <form method="post" action="/navigation">
+  <fieldset class="govuk-fieldset">
+
+    <h2 class="govuk-heading-l">
+      Select what you need to do with your documents
+    </h2>
+
+    <p>Check your latest email from the Financial Oversight Scheme for instructions on what to do next.</p>
+    <p>Select all that apply</p>
+
+    <div class="govuk-checkboxes">
+
+      <!-- ✅ DOWNLOAD -->
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input"
+               id="download"
+               name="documents"
+               type="checkbox"
+               value="download">
+        <label class="govuk-label govuk-checkboxes__label" for="download">
+          Download the latest quarterly financial data spreadsheet
+        </label>
+      </div>
+
+      <!-- ✅ UPLOAD -->
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input"
+               id="additional"
+               name="documents"
+               type="checkbox"
+               value="upload">
+        <label class="govuk-label govuk-checkboxes__label" for="additional">
+          Upload completed spreadsheet or additional documents
+        </label>
+      </div>
+
+    </div>
+
+  </fieldset>
+
+  <br>
+
+  {{ govukButton({ text: "Continue" }) }}
+</form>
+{% endblock %}

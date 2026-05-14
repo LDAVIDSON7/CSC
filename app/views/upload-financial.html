@@ -45,31 +45,47 @@ Children's Social Care Financial Oversight Scheme      </h1>
 
 </style>
 
-
 <div class="custom-nav">
 
   <!-- START -->
-   <div class="custom-nav__item {% if currentPage == 'details' %}custom-nav__item--active{% endif %}">
-    <a href="/navigation">Your details</a>
-  </div>
-  <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
-    <a href="/navigation">Select documents</a>
+  <div class="custom-nav__item {% if currentPage == 'action' %}custom-nav__item--active{% endif %}">
+    <a href="/action">Select an action</a>
   </div>
 
-  <!-- DYNAMIC TABS -->
-  {% for page in journey %}
-    <div class="custom-nav__item {% if currentPage == page %}custom-nav__item--active{% endif %}">
-  {% if page == 'upload-financial' %}
-      <a href="/upload-financial">Financial data</a>
-
-      {% elif page == 'upload-rrp' %}
-        <a href="/upload-rrp">Recovery and resolution plan</a>
-
-      {% elif page == 'upload-additional' %}
-        <a href="/upload-additional">Additional documents</a>
-      {% endif %}
-
+  <!-- DOWNLOAD (only show if in journey) -->
+  {% if 'download' in journey %}
+    <div class="custom-nav__item {% if currentPage == 'download' %}custom-nav__item--active{% endif %}">
+      <a href="/download">Download spreadsheet</a>
     </div>
+  {% endif %}
+
+  <!-- UPLOAD ENTRY -->
+  {% if 'navigation' in journey %}
+    <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
+      <a href="/navigation">Upload documents</a>
+    </div>
+  {% endif %}
+
+  <!-- DYNAMIC STEPS -->
+  {% for page in journey %}
+    {% if page != 'navigation' and page != 'download' %}
+      <div class="custom-nav__item {% if currentPage == page %}custom-nav__item--active{% endif %}">
+        
+        {% if page == 'upload-group' %}
+          <a href="/upload-group">Group structure</a>
+
+        {% elif page == 'upload-financial' %}
+          <a href="/upload-financial">Financial data</a>
+
+        {% elif page == 'upload-rrp' %}
+          <a href="/upload-rrp">Recovery and resolution plan</a>
+
+        {% elif page == 'upload-additional' %}
+          <a href="/upload-additional">Additional documents</a>
+        {% endif %}
+
+      </div>
+    {% endif %}
   {% endfor %}
 
   <!-- CONFIRM -->
@@ -79,7 +95,10 @@ Children's Social Care Financial Oversight Scheme      </h1>
 
 </div>
 
+
   <br>
+ <span class="govuk-caption-m"> CareTech</span>
+ 
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">

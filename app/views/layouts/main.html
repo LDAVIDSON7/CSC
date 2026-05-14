@@ -34,3 +34,9 @@
     <a href="/confirmation">Confirm and submit</a>
   </div>
 </div>
+
+
+{% block scripts %}
+    {{ super() }}
+    <script src="/assets/js/dfefrontend.min.js"></script>
+{% endblock %}
