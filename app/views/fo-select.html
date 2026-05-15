@@ -1,0 +1,166 @@
+{% set currentPage = "select" %}
+{% set version = data['version'] or '1' %}
+
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Select a provider – {{ serviceName }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  
+  <h1 class="govuk-heading-xl">
+    Children's Social Care Financial Oversight Scheme
+  </h1>
+
+  {{ super() }}
+
+  <style>
+    .custom-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      padding: 1rem 0 0 0;
+      border-bottom: 1px solid #b1b4b6;
+    }
+
+    .custom-nav__item a {
+      text-decoration: none;
+      color: #0b0c0c;
+      font-size: 1.1rem;
+    }
+
+    .custom-nav__item--active {
+      border-bottom: 4px solid #0b0c0c;
+    }
+
+    .custom-nav__item--active a {
+      font-weight: bold;
+    }
+  </style>
+
+  <!-- ✅ NAV -->
+  <div class="custom-nav">
+    <div class="custom-nav__item {% if currentPage == 'select' %}custom-nav__item--active{% endif %}">
+      <a href="/fo-select">Select a provider</a>
+    </div>
+
+    <div class="custom-nav__item {% if currentPage == 'upload' %}custom-nav__item--active{% endif %}">
+      <a href="/fo-team">Upload files</a>
+    </div>
+
+    <div class="custom-nav__item {% if currentPage == 'confirm' %}custom-nav__item--active{% endif %}">
+      <a href="/fo-confirm">Confirmation</a>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <!-- ✅ FORM START -->
+      <form method="post" action="/fo-team">
+
+        {% if version == "1" %}
+
+          <!-- ✅ VERSION 1: AUTOCOMPLETE -->
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-label--l" for="country">
+             Select the provider you're sending documents to
+            </label>
+
+            <select class="govuk-select"
+                    id="country"
+                    name="country"
+                    data-module="autocomplete">
+
+              <option value="" selected disabled>Select an option</option>
+              <option value="A">Provider A</option>
+              <option value="B">Provider B</option>
+              <option value="C">Provider C</option>
+              <option value="D">Provider D</option>
+              <option value="E">Provider E</option>
+              <option value="F">Provider F</option>
+              <option value="G">Provider G</option>
+              <option value="H">Provider H</option>
+              <option value="I">Provider I</option>
+              <option value="J">Provider J</option>
+              <option value="K">Provider K</option>
+              <option value="L">Provider L</option>
+              <option value="M">Provider M</option>
+              <option value="N">Provider N</option>
+              <option value="Caretech">Caretech</option>
+            </select>
+          </div>
+
+        {% elif version == "2" %}
+
+          <!-- ✅ VERSION 2: RADIOS -->
+          {{ govukRadios({
+            name: "country",
+            fieldset: {
+              legend: {
+                text: "Select the provider you're sending documents to",
+                classes: "govuk-fieldset__legend--l",
+                isPageHeading: true
+              }
+            },
+            items: [
+              { value: "A", text: "Provider A" },
+              { value: "B", text: "Provider B" },
+              { value: "C", text: "Provider C" },
+              { value: "D", text: "Provider D" },
+              { value: "E", text: "Provider E" },
+              { value: "F", text: "Provider F" },
+              { value: "G", text: "Provider G" },
+              { value: "H", text: "Provider H" },
+              { value: "I", text: "Provider I" },
+              { value: "J", text: "Provider J" },
+              { value: "K", text: "Provider K" },
+              { value: "L", text: "Provider L" },
+              { value: "M", text: "Provider M" },
+              { value: "N", text: "Provider N" },
+              { value: "Caretech", text: "Caretech" }
+            ]
+          }) }}
+
+        {% endif %}
+
+        <!-- ✅ BUTTON -->
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+      <!-- ✅ FORM END -->
+
+      <!-- ✅ VERSION SWITCH LINKS -->
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+      <p class="govuk-body-s">
+        <strong>Try different versions:</strong><br>
+
+        <a href="/fo-select?version=1"
+           class="govuk-link {% if version == '1' %}govuk-!-font-weight-bold{% endif %}">
+          Version 1 – Autocomplete
+        </a>
+
+        |
+
+        <a href="/fo-select?version=2"
+           class="govuk-link {% if version == '2' %}govuk-!-font-weight-bold{% endif %}">
+          Version 2 – Radios
+        </a>
+
+      </p>
+
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
+

@@ -168,3 +168,28 @@ router.get('/declaration', (req, res) => {
 })
 
 module.exports = router
+
+
+router.get('/fo-select', (req, res) => {
+  res.render('fo-select', {
+    currentPage: 'fo-select',
+    journey: req.session.data.journey || []
+  })
+})
+
+router.post('/fo-select', (req, res) => {
+  return nextStep(req, res, 'fo-select')
+})
+
+
+router.get('/fo-confirm', (req, res) => {
+  res.render('fo-confirm', {
+    currentPage: 'fo-confirm',
+    journey: req.session.data.journey || []
+  })
+})
+
+
+router.post('/fo-confirm', (req, res) => {
+  res.redirect('/fo-confirm')
+})
