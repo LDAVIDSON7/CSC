@@ -69,7 +69,7 @@
           <!-- ✅ VERSION 1: AUTOCOMPLETE -->
           <div class="govuk-form-group">
             <label class="govuk-label govuk-label--l" for="country">
-             Select the provider you're sending documents to
+             Which provider are you sending a file to?
             </label>
 
             <select class="govuk-select"
@@ -92,7 +92,7 @@
               <option value="L">Provider L</option>
               <option value="M">Provider M</option>
               <option value="N">Provider N</option>
-              <option value="Caretech">Caretech</option>
+              <option value="Caretech">Caretech </option>
             </select>
           </div>
 
@@ -123,7 +123,7 @@
               { value: "L", text: "Provider L" },
               { value: "M", text: "Provider M" },
               { value: "N", text: "Provider N" },
-              { value: "Caretech", text: "Caretech" }
+              { value: "Caretech", text: "Caretech (12345678)" }
             ]
           }) }}
 
@@ -140,21 +140,7 @@
       <!-- ✅ VERSION SWITCH LINKS -->
       <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
-      <p class="govuk-body-s">
-        <strong>Try different versions:</strong><br>
-
-        <a href="/fo-select?version=1"
-           class="govuk-link {% if version == '1' %}govuk-!-font-weight-bold{% endif %}">
-          Version 1 – Autocomplete
-        </a>
-
-        |
-
-        <a href="/fo-select?version=2"
-           class="govuk-link {% if version == '2' %}govuk-!-font-weight-bold{% endif %}">
-          Version 2 – Radios
-        </a>
-
+      
       </p>
 
     </div>

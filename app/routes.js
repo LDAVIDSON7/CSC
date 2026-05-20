@@ -193,3 +193,8 @@ router.get('/fo-confirm', (req, res) => {
 router.post('/fo-confirm', (req, res) => {
   res.redirect('/fo-confirm')
 })
+
+
+router.post('/fo-confirmation', (req, res) => {
+  res.redirect('/fo-confirmation')
+})

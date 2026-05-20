@@ -69,10 +69,12 @@ Children's Social Care Financial Oversight Scheme      </h1>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds-from-desktop">
 
-          <span class="govuk-caption-m"> Caretech</span>
-  
+        
+      <h1 class="govuk-heading-l">
+       CareTech
+      </h1> 
 
-        <h1 class="govuk-heading-l">Check upload details</h1>
+        <h1 class="govuk-heading-m">Check upload details</h1>
         
         <dl class="govuk-summary-list govuk-!-margin-bottom-9">
           <div class="govuk-summary-list__row">
@@ -110,14 +112,14 @@ Children's Social Care Financial Oversight Scheme      </h1>
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="confirm" name="confirm" type="checkbox">
             <label class="govuk-label govuk-checkboxes__label" for="confirm">
-              I confirm that the information I am providing is accurate and complete.
+             I confirm that I am sending the correct file to the correct provider.
             </label>
           </div>
           
         </div>
         <br>
        
-        <form action="/form-handler" method="post" novalidate>
+        <form action="/fo-confirmation" method="post" novalidate>
           <input type="hidden" name="answers-checked" value="true">
           <button type="submit" class="govuk-button" data-module="govuk-button">
             Confirm and send
