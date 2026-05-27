@@ -64,9 +64,7 @@
       <!-- ✅ FORM START -->
       <form method="post" action="/fo-team">
 
-        {% if version == "1" %}
-
-          <!-- ✅ VERSION 1: AUTOCOMPLETE -->
+       
           <div class="govuk-form-group">
             <label class="govuk-label govuk-label--l" for="country">
              Which provider are you sending a file to?
@@ -92,42 +90,42 @@
               <option value="L">Provider L</option>
               <option value="M">Provider M</option>
               <option value="N">Provider N</option>
-              <option value="Caretech">Caretech </option>
+              <option value="Caretech">Caretech</option>
             </select>
+            <div id="caretech-details" style="display: none; margin-top: 20px;">
+
+  <dl class="govuk-summary-list govuk-!-margin-bottom-4">
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">Provider</dt>
+      <dd class="govuk-summary-list__value">CareTech</dd>
+    </div>
+
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">UK Provider Reference Number (UKPRN)</dt>
+      <dd class="govuk-summary-list__value">123456789</dd>
+    </div>
+
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">Companies House Number</dt>
+      <dd class="govuk-summary-list__value">987654321</dd>
+    </div>
+  </dl>
+
+  {{ govukCheckboxes({
+    name: "confirm-provider",
+    items: [
+      {
+        value: "yes",
+        text: "I confirm this is the provider I want to send a file to"
+      }
+    ]
+  }) }}
+
+</div>
           </div>
 
-        {% elif version == "2" %}
-
-          <!-- ✅ VERSION 2: RADIOS -->
-          {{ govukRadios({
-            name: "country",
-            fieldset: {
-              legend: {
-                text: "Select the provider you're sending documents to",
-                classes: "govuk-fieldset__legend--l",
-                isPageHeading: true
-              }
-            },
-            items: [
-              { value: "A", text: "Provider A" },
-              { value: "B", text: "Provider B" },
-              { value: "C", text: "Provider C" },
-              { value: "D", text: "Provider D" },
-              { value: "E", text: "Provider E" },
-              { value: "F", text: "Provider F" },
-              { value: "G", text: "Provider G" },
-              { value: "H", text: "Provider H" },
-              { value: "I", text: "Provider I" },
-              { value: "J", text: "Provider J" },
-              { value: "K", text: "Provider K" },
-              { value: "L", text: "Provider L" },
-              { value: "M", text: "Provider M" },
-              { value: "N", text: "Provider N" },
-              { value: "Caretech", text: "Caretech (12345678)" }
-            ]
-          }) }}
-
-        {% endif %}
+       
+          
 
         <!-- ✅ BUTTON -->
         {{ govukButton({
@@ -137,9 +135,7 @@
       </form>
       <!-- ✅ FORM END -->
 
-      <!-- ✅ VERSION SWITCH LINKS -->
-      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
-
+      
       
       </p>
 
@@ -147,6 +143,55 @@
   </div>
 
 </div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+
+    const details = document.getElementById('caretech-details');
+
+    function checkValue(value) {
+      if (value && value.toLowerCase() === 'caretech') {
+        details.style.display = 'block';
+      } else {
+        details.style.display = 'none';
+      }
+    }
+
+    // WAIT for autocomplete to be created
+    setTimeout(function () {
+
+      const input = document.querySelector('.autocomplete__input');
+      const select = document.getElementById('country');
+
+      if (input) {
+        // Fires when typing
+        input.addEventListener('input', function () {
+          checkValue(input.value);
+        });
+
+        // Fires when user selects an option
+        input.addEventListener('blur', function () {
+          checkValue(input.value);
+        });
+
+        // Fires when pressing enter
+        input.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter') {
+            checkValue(input.value);
+          }
+        });
+      }
+
+      // Fallback (hidden select still updates)
+      if (select) {
+        select.addEventListener('change', function () {
+          checkValue(select.value);
+        });
+      }
+
+    }, 200); // small delay so GOV.UK JS finishes
+
+  });
+</script>
 
 {% endblock %}
 
