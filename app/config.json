@@ -1,5 +1,5 @@
 {
-  "serviceName": "Children's Social Care Financial Oversight Scheme",
+  "serviceName": "Submit children’s social care financial information​",
   "plugins": {
     "govuk-frontend": {
       "rebrand": true
