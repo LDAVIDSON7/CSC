@@ -48,14 +48,9 @@
   <div class="custom-nav">
 
   <!-- ALWAYS SHOW START -->
-  <div class="custom-nav__item {% if currentPage == 'action' %}custom-nav__item--active{% endif %}">
-    <a href="/action">Select an action</a>
-  </div>
-  <div class="custom-nav__item {% if currentPage == 'download' %}custom-nav__item--active{% endif %}">
-    <a href="/download">Download spreadsheet</a>
-  </div>
+ 
   <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
-    <a href="/navigation">Upload documents</a>
+    <a href="/navigation">Select documents</a>
   </div>
 
  {% if currentPage != 'navigation' %}
@@ -95,16 +90,19 @@
      <h2 class="govuk-heading-l">
 Select the documents you need to upload    </h2>
 
-     
-
+   
 
       <p>Check your latest email from the Financial Oversight Scheme to confirm which documents you need to upload.</p>
+        {{ govukInsetText({
+      text: "If your group structure has changed, you need to share the latest version by selecting ‘Additional documents’."
+     }) }}
+
       <p>Select all that apply</p>
       <div class="govuk-checkboxes">
       
         <div class="govuk-checkboxes__item">
           <input class="govuk-checkboxes__input" id="model" name="documents" type="checkbox" value="upload-financial">
-          <label class="govuk-label govuk-checkboxes__label" for="model">Quarterly financial data  </label>
+          <label class="govuk-label govuk-checkboxes__label" for="model">Quarterly financial data spreadsheet  </label>
         </div>
       
         <div class="govuk-checkboxes__item">

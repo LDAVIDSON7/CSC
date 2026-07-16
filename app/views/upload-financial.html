@@ -47,24 +47,13 @@
 
 <div class="custom-nav">
 
-  <!-- START -->
-  <div class="custom-nav__item {% if currentPage == 'action' %}custom-nav__item--active{% endif %}">
-    <a href="/action">Select an action</a>
-  </div>
-
-  <!-- DOWNLOAD (only show if in journey) -->
-  {% if 'download' in journey %}
-    <div class="custom-nav__item {% if currentPage == 'download' %}custom-nav__item--active{% endif %}">
-      <a href="/download">Download spreadsheet</a>
-    </div>
-  {% endif %}
+ 
+  
 
   <!-- UPLOAD ENTRY -->
-  {% if 'navigation' in journey %}
-    <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
-      <a href="/navigation">Upload documents</a>
-    </div>
-  {% endif %}
+   <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
+    <a href="/navigation">Select documents</a>
+  </div>
 
   <!-- DYNAMIC STEPS -->
   {% for page in journey %}
@@ -108,7 +97,7 @@
  
 
       {{ govukInsetText({
-        text: "You must enter your data in the Financial Oversight Scheme spreadsheet."
+        text: "Enter your data in the quarterly financial data spreadsheet from the Financial Oversight Scheme."
       }) }}
 
 

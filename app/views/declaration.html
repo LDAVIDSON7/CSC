@@ -47,17 +47,9 @@
 </style>
 
 <div class="custom-nav">
-
-  <!-- START -->
-   <div class="custom-nav__item {% if currentPage == 'action' %}custom-nav__item--active{% endif %}">
-    <a href="/action">Select an action</a>
-  </div>
-  <div class="custom-nav__item {% if currentPage == 'download' %}custom-nav__item--active{% endif %}">
-    <a href="/download">Download spreadsheet</a>
-  </div>
-  <div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
-    <a href="/navigation">Upload documents</a>
-  </div>
+<div class="custom-nav__item {% if currentPage == 'navigation' %}custom-nav__item--active{% endif %}">
+    <a href="/navigation">Select documents</a>
+  </div
 
     <!-- DYNAMIC TABS -->
   {% for page in journey %}
@@ -161,7 +153,7 @@ Quarterly finanical data         </dt>
        
         </dl>
       
-      <h2 class="govuk-heading-m">Confirm and submit</h2>
+      <h2 class="govuk-heading-m">Check before you submit</h2>
 
       <form method="post" action="/confirmation" id="declaration-form">
         <div class="govuk-checkboxes">
